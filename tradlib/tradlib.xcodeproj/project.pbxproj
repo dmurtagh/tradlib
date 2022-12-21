@@ -1,0 +1,365 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CEFD1A772951961A001451DE /* tradlib.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFD1A762951961A001451DE /* tradlib.swift */; };
+		CEFD1A8E295198D4001451DE /* FIRFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFD1A8C295198D4001451DE /* FIRFilter.cpp */; };
+		CEFD1A9A2951994C001451DE /* FastFourierTransform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFD1A982951994C001451DE /* FastFourierTransform.cpp */; };
+		CEFD1A9D2951995C001451DE /* FrequencyDomainCombFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFD1A9B2951995C001451DE /* FrequencyDomainCombFilter.cpp */; };
+		CEFD1AA02951996C001451DE /* PeakCalculator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFD1A9E2951996C001451DE /* PeakCalculator.cpp */; };
+		CEFD1AA32951997B001451DE /* SpectralCentroid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFD1AA12951997B001451DE /* SpectralCentroid.cpp */; };
+		CEFD1AA62951998B001451DE /* TimeDomainCombFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFD1AA42951998B001451DE /* TimeDomainCombFilter.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		CEFD1A712951961A001451DE /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		CEFD1A732951961A001451DE /* libtradlib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libtradlib.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		CEFD1A762951961A001451DE /* tradlib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tradlib.swift; sourceTree = "<group>"; };
+		CEFD1A8B295198D4001451DE /* tradlib-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "tradlib-Bridging-Header.h"; sourceTree = "<group>"; };
+		CEFD1A8C295198D4001451DE /* FIRFilter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FIRFilter.cpp; sourceTree = "<group>"; };
+		CEFD1A8D295198D4001451DE /* FIRFilter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FIRFilter.hpp; sourceTree = "<group>"; };
+		CEFD1A982951994C001451DE /* FastFourierTransform.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FastFourierTransform.cpp; sourceTree = "<group>"; };
+		CEFD1A992951994C001451DE /* FastFourierTransform.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FastFourierTransform.hpp; sourceTree = "<group>"; };
+		CEFD1A9B2951995C001451DE /* FrequencyDomainCombFilter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FrequencyDomainCombFilter.cpp; sourceTree = "<group>"; };
+		CEFD1A9C2951995C001451DE /* FrequencyDomainCombFilter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FrequencyDomainCombFilter.hpp; sourceTree = "<group>"; };
+		CEFD1A9E2951996C001451DE /* PeakCalculator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PeakCalculator.cpp; sourceTree = "<group>"; };
+		CEFD1A9F2951996C001451DE /* PeakCalculator.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PeakCalculator.hpp; sourceTree = "<group>"; };
+		CEFD1AA12951997B001451DE /* SpectralCentroid.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SpectralCentroid.cpp; sourceTree = "<group>"; };
+		CEFD1AA22951997B001451DE /* SpectralCentroid.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SpectralCentroid.hpp; sourceTree = "<group>"; };
+		CEFD1AA42951998B001451DE /* TimeDomainCombFilter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TimeDomainCombFilter.cpp; sourceTree = "<group>"; };
+		CEFD1AA52951998B001451DE /* TimeDomainCombFilter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TimeDomainCombFilter.hpp; sourceTree = "<group>"; };
+		CEFD1AA8295256D5001451DE /* TradlibCommon.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TradlibCommon.hpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CEFD1A702951961A001451DE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		CEFD1A6A2951961A001451DE = {
+			isa = PBXGroup;
+			children = (
+				CEFD1A7D295196B7001451DE /* cpp */,
+				CEFD1A752951961A001451DE /* tradlib */,
+				CEFD1A742951961A001451DE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		CEFD1A742951961A001451DE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CEFD1A732951961A001451DE /* libtradlib.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CEFD1A752951961A001451DE /* tradlib */ = {
+			isa = PBXGroup;
+			children = (
+				CEFD1A762951961A001451DE /* tradlib.swift */,
+			);
+			path = tradlib;
+			sourceTree = "<group>";
+		};
+		CEFD1A7D295196B7001451DE /* cpp */ = {
+			isa = PBXGroup;
+			children = (
+				CEFD1AA8295256D5001451DE /* TradlibCommon.hpp */,
+				CEFD1A7E295196B7001451DE /* dsp */,
+			);
+			name = cpp;
+			path = tradlib/cpp;
+			sourceTree = "<group>";
+		};
+		CEFD1A7E295196B7001451DE /* dsp */ = {
+			isa = PBXGroup;
+			children = (
+				CEFD1A8B295198D4001451DE /* tradlib-Bridging-Header.h */,
+				CEFD1A8C295198D4001451DE /* FIRFilter.cpp */,
+				CEFD1A8D295198D4001451DE /* FIRFilter.hpp */,
+				CEFD1A9B2951995C001451DE /* FrequencyDomainCombFilter.cpp */,
+				CEFD1A9C2951995C001451DE /* FrequencyDomainCombFilter.hpp */,
+				CEFD1A982951994C001451DE /* FastFourierTransform.cpp */,
+				CEFD1A992951994C001451DE /* FastFourierTransform.hpp */,
+				CEFD1A9E2951996C001451DE /* PeakCalculator.cpp */,
+				CEFD1A9F2951996C001451DE /* PeakCalculator.hpp */,
+				CEFD1AA12951997B001451DE /* SpectralCentroid.cpp */,
+				CEFD1AA22951997B001451DE /* SpectralCentroid.hpp */,
+				CEFD1AA42951998B001451DE /* TimeDomainCombFilter.cpp */,
+				CEFD1AA52951998B001451DE /* TimeDomainCombFilter.hpp */,
+			);
+			path = dsp;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		CEFD1A722951961A001451DE /* tradlib */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CEFD1A7A2951961A001451DE /* Build configuration list for PBXNativeTarget "tradlib" */;
+			buildPhases = (
+				CEFD1A6F2951961A001451DE /* Sources */,
+				CEFD1A702951961A001451DE /* Frameworks */,
+				CEFD1A712951961A001451DE /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = tradlib;
+			productName = tradlib;
+			productReference = CEFD1A732951961A001451DE /* libtradlib.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CEFD1A6B2951961A001451DE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1410;
+				LastUpgradeCheck = 1410;
+				TargetAttributes = {
+					CEFD1A722951961A001451DE = {
+						CreatedOnToolsVersion = 14.1;
+						LastSwiftMigration = 1410;
+					};
+				};
+			};
+			buildConfigurationList = CEFD1A6E2951961A001451DE /* Build configuration list for PBXProject "tradlib" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = CEFD1A6A2951961A001451DE;
+			productRefGroup = CEFD1A742951961A001451DE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CEFD1A722951961A001451DE /* tradlib */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CEFD1A6F2951961A001451DE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CEFD1A9A2951994C001451DE /* FastFourierTransform.cpp in Sources */,
+				CEFD1AA32951997B001451DE /* SpectralCentroid.cpp in Sources */,
+				CEFD1A772951961A001451DE /* tradlib.swift in Sources */,
+				CEFD1A8E295198D4001451DE /* FIRFilter.cpp in Sources */,
+				CEFD1AA62951998B001451DE /* TimeDomainCombFilter.cpp in Sources */,
+				CEFD1A9D2951995C001451DE /* FrequencyDomainCombFilter.cpp in Sources */,
+				CEFD1AA02951996C001451DE /* PeakCalculator.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		CEFD1A782951961A001451DE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		CEFD1A792951961A001451DE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		CEFD1A7B2951961A001451DE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "tradlib/cpp/dsp/tradlib-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		CEFD1A7C2951961A001451DE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "tradlib/cpp/dsp/tradlib-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CEFD1A6E2951961A001451DE /* Build configuration list for PBXProject "tradlib" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CEFD1A782951961A001451DE /* Debug */,
+				CEFD1A792951961A001451DE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CEFD1A7A2951961A001451DE /* Build configuration list for PBXNativeTarget "tradlib" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CEFD1A7B2951961A001451DE /* Debug */,
+				CEFD1A7C2951961A001451DE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = CEFD1A6B2951961A001451DE /* Project object */;
+}
