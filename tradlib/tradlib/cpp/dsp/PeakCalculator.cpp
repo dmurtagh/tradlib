@@ -2,7 +2,7 @@
 //  PeakCalculator.cpp
 //  tradlib
 //
-//  Created by damien murtagh on 12/19/22.
+//  Created by damien murtagh on 12/21/22.
 //
 
 #include "PeakCalculator.hpp"
@@ -10,7 +10,7 @@
 
 using namespace tradlib;
 
-SharedIntVec PeakCalculator::calculatePeaks2(const vector<float> & data, int border, int howFar, float thresholdNormal)
+SharedIntVec PeakCalculator::calculatePeaks2(const SharedFloatVec & data, int border, int howFar, float thresholdNormal)
 {
     float thresholdValue = 0;
     // First calculate the threshold
@@ -18,9 +18,9 @@ SharedIntVec PeakCalculator::calculatePeaks2(const vector<float> & data, int bor
     {
         for (int i = 0 ; i < howFar ; i ++)
         {
-            if (data[i] > thresholdValue)
+            if ((*data)[i] > thresholdValue)
             {
-                thresholdValue = data[i];
+                thresholdValue = (*data)[i];
             }
         }
     }
@@ -33,11 +33,11 @@ SharedIntVec PeakCalculator::calculatePeaks2(const vector<float> & data, int bor
         for (int i = border ; i < howFar - border ; i ++)
         {
             bool addPeak = true;
-            if (data[i] >= thresholdValue)
+            if ((*data)[i] >= thresholdValue)
             {
                 for (int j = 0 ; j < border ; j ++)
                 {
-                    if ((data[i] < data[i - j]) || (data[i] < data[i + j]))
+                    if (((*data)[i] < (*data)[i - j]) || ((*data)[i] < (*data)[i + j]))
                     {
                         addPeak = false;
                         break;
@@ -57,7 +57,7 @@ SharedIntVec PeakCalculator::calculatePeaks2(const vector<float> & data, int bor
     return peaks;
 }
 
-SharedIntVec PeakCalculator::calculatePeaks(const vector<float> & data, int border, int howFar, float thresholdNormal)
+SharedIntVec PeakCalculator::calculatePeaks(const SharedFloatVec & data, int border, int howFar, float thresholdNormal)
 {
     float thresholdValue = 0;
     // First calculate the threshold
@@ -65,9 +65,9 @@ SharedIntVec PeakCalculator::calculatePeaks(const vector<float> & data, int bord
     {
         for (int i = 0 ; i < howFar ; i ++)
         {
-            if (data[i] > thresholdValue)
+            if ((*data)[i] > thresholdValue)
             {
-                thresholdValue = data[i];
+                thresholdValue = (*data)[i];
             }
         }
     }
@@ -80,12 +80,12 @@ SharedIntVec PeakCalculator::calculatePeaks(const vector<float> & data, int bord
         for (int i = border ; i < howFar - border ; i ++)
         {
             bool addPeak = true;
-            if (data[i] >= thresholdValue)
+            if ((*data)[i] >= thresholdValue)
             {
                 for (int j = 0 ; j < border ; j ++)
                 {
                     //if ((data[i] < data[i - j]) || (data[i] < data[i + j]))
-                    if ((data[i-j] <= data[(i - j)-1]) || (data[i+j] <= data[i + j + 1]))
+                    if (((*data)[i-j] <= (*data)[(i - j)-1]) || ((*data)[i+j] <= (*data)[i + j + 1]))
                     {
                         addPeak = false;
                         break;
@@ -105,7 +105,7 @@ SharedIntVec PeakCalculator::calculatePeaks(const vector<float> & data, int bord
     return peaks;
 }
 
-float calculateThresholdValue(const vector<float> & data, int howFar, float thresholdNormal)
+float calculateThresholdValue(const SharedFloatVec & data, int howFar, float thresholdNormal)
 {
     float thresholdValue = std::numeric_limits<float>::max();
     // First calculate the threshold
@@ -114,13 +114,13 @@ float calculateThresholdValue(const vector<float> & data, int howFar, float thre
     {
         for (int i = 0 ; i < howFar ; i ++)
         {
-            if (data[i] < min)
+            if ((*data)[i] < min)
             {
-                min = data[i];
+                min = (*data)[i];
             }
-            else if (data[i] >= max)
+            else if ((*data)[i] >= max)
             {
-                max = data[i];
+                max = (*data)[i];
             }
         }
     }
@@ -128,7 +128,7 @@ float calculateThresholdValue(const vector<float> & data, int howFar, float thre
     return min + (thresholdNormal * range);
 }
 
-SharedIntVec PeakCalculator::calculateTrough(const vector<float> & data, int border, int howFar, int sj, float thresholdValue)
+SharedIntVec PeakCalculator::calculateTrough(const SharedFloatVec & data, int border, int howFar, int sj, float thresholdValue)
 {
     SharedIntVec troughs = SharedIntVec(new vector<int>());
     
@@ -139,7 +139,7 @@ SharedIntVec PeakCalculator::calculateTrough(const vector<float> & data, int bor
             bool addPeak = true;
             for (int j = 0 ; j < border ; j ++)
             {
-                if ((data[i] > data[i - j]))
+                if (((*data)[i] > (*data)[i - j]))
                 {
                     addPeak = false;
                     break;
@@ -147,7 +147,7 @@ SharedIntVec PeakCalculator::calculateTrough(const vector<float> & data, int bor
             }
             if (addPeak)
             {
-                if (data[i] <= thresholdValue)
+                if ((*data)[i] <= thresholdValue)
                 {
                     // Dont add 2 consecutive troughs
                     auto & pTroughs = *troughs;

@@ -2,7 +2,7 @@
 //  PeakCalculator.hpp
 //  tradlib
 //
-//  Created by damien murtagh on 12/19/22.
+//  Created by damien murtagh on 12/21/22.
 //
 
 #pragma once
@@ -18,12 +18,12 @@ namespace tradlib
         
     public:
         
-        static SharedIntVec calculatePeaks2(const vector<float> & data, int border, int howFar, float thresholdNormal);
+        static SharedIntVec calculatePeaks2(const SharedFloatVec & data, int border, int howFar, float thresholdNormal);
         
-        static SharedIntVec calculatePeaks(const vector<float> & data, int border, int howFar, float thresholdNormal);
+        static SharedIntVec calculatePeaks(const SharedFloatVec & data, int border, int howFar, float thresholdNormal);
         
-        static float calculateThresholdValue(const vector<float> & data, int howFar, float thresholdNormal);
+        static float calculateThresholdValue(const SharedFloatVec & data, int howFar, float thresholdNormal);
         
-        static SharedIntVec calculateTrough(const vector<float> & data, int border, int howFar, int sj, float thresholdValue);
+        static SharedIntVec calculateTrough(const SharedFloatVec & data, int border, int howFar, int sj, float thresholdValue);
     };
 }

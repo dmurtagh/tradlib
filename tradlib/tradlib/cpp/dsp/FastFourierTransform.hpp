@@ -2,13 +2,14 @@
 //  FastFourierTransform.hpp
 //  tradlib
 //
-//  Created by damien murtagh on 12/19/22.
+//  Created by damien murtagh on 12/21/22.
 //
 
 #pragma once
 
 #include <vector>
 #include <cmath>
+#include "TradlibCommon.hpp"
 
 using namespace std;
 
@@ -25,20 +26,20 @@ namespace tradlib
         
     public:
         
-        vector<float> fftMag(const vector<float> & x);
+        SharedFloatVec fftMag(const SharedFloatVec & x);
         
-        vector<float> fftLogMag(const vector<float> & x);
+        SharedFloatVec fftLogMag(const SharedFloatVec & x);
         
-        vector<float> fftMag(const vector<float> & x, int start, size_t length);
+        SharedFloatVec fftMag(const SharedFloatVec & x, int start, size_t length);
         
-        vector<float> fftLogMag(const vector<float> & x, int start, size_t length);
+        SharedFloatVec fftLogMag(const SharedFloatVec & x, int start, size_t length);
         
         /**
          * Calcuate the nearest power of 2 to a number
          */
         static int smallestPowerOf2(int value);
         
-        void printFft(const vector<float> fft, float sampleRate);
+        void printFft(const SharedFloatVec & fft, float sampleRate);
         
         static void test();
     };

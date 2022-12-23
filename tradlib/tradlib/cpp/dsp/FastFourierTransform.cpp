@@ -2,10 +2,11 @@
 //  FastFourierTransform.cpp
 //  tradlib
 //
-//  Created by damien murtagh on 12/19/22.
+//  Created by damien murtagh on 12/21/22.
 //
 
 #include "FastFourierTransform.hpp"
+#include "TradlibCommon.hpp"
 
 using namespace tradlib;
 
@@ -24,19 +25,19 @@ int FastFourierTransform::bitrev(int j)
 }
 
 
-vector<float> FastFourierTransform::fftMag(const vector<float> & x)
+SharedFloatVec FastFourierTransform::fftMag(const SharedFloatVec & x)
 {
-    return fftMag(x, 0, x.size());
+    return fftMag(x, 0, x->size());
 }
 
 
-vector<float> FastFourierTransform::fftLogMag(const vector<float> & x)
+SharedFloatVec FastFourierTransform::fftLogMag(const SharedFloatVec & x)
 {
-    return fftLogMag(x, 0, x.size());
+    return fftLogMag(x, 0, x->size());
 }
 
 
-vector<float> FastFourierTransform::fftMag(const vector<float> & x, int start, size_t length)
+SharedFloatVec FastFourierTransform::fftMag(const SharedFloatVec & x, int start, size_t length)
 {
     // assume n is a power of 2
     m_N = (int)length;
@@ -45,11 +46,11 @@ vector<float> FastFourierTransform::fftMag(const vector<float> & x, int start, s
     int nu1 = m_NU - 1;
     vector<float> xre(m_N);
     vector<float> xim(m_N);
-    vector<float> mag(n2);
+    SharedFloatVec mag = makeSharedFloatVec(n2);
     float tr, ti, p, arg, c, s;
     for (int i = 0; i < m_N; i++)
     {
-        xre[i] = x[i + start];
+        xre[i] = (*x)[i + start];
         xim[i] = 0.0f;
     }
     int k = 0;
@@ -95,16 +96,16 @@ vector<float> FastFourierTransform::fftMag(const vector<float> & x, int start, s
         k++;
     }
 
-    mag[0] = (float) (std::sqrt(xre[0]*xre[0] + xim[0]*xim[0]))/m_N;
+    (*mag)[0] = (float) (std::sqrt(xre[0]*xre[0] + xim[0]*xim[0]))/m_N;
     for (int i = 1; i < m_N/2; i++)
     {
-        mag[i]= 2 * (float) (std::sqrt(xre[i]*xre[i] + xim[i]*xim[i]))/m_N;
+        (*mag)[i]= 2 * (float) (std::sqrt(xre[i]*xre[i] + xim[i]*xim[i]))/m_N;
     }
     
     return mag;
 }
 
-vector<float> FastFourierTransform::fftLogMag(const vector<float> & x, int start, size_t length)
+SharedFloatVec FastFourierTransform::fftLogMag(const SharedFloatVec & x, int start, size_t length)
 {
     // assume n is a power of 2
     m_N = (int)length;
@@ -113,11 +114,11 @@ vector<float> FastFourierTransform::fftLogMag(const vector<float> & x, int start
     int nu1 = m_NU - 1;
     vector<float> xre(m_N);
     vector<float> xim(m_N);
-    vector<float> mag(n2);
+    SharedFloatVec mag = makeSharedFloatVec(n2);
     float tr, ti, p, arg, c, s;
     for (int i = 0; i < m_N; i++)
     {
-        xre[i] = (float) std::log((double) x[i + start]);
+        xre[i] = (float) std::log((double) (*x)[i + start]);
         xim[i] = 0.0f;
     }
     int k = 0;
@@ -163,9 +164,9 @@ vector<float> FastFourierTransform::fftLogMag(const vector<float> & x, int start
         }
         k++;
     }
-    mag[0] = (float) (std::sqrt(xre[0]*xre[0] + xim[0]*xim[0]))/m_N;
+    (*mag)[0] = (float) (std::sqrt(xre[0]*xre[0] + xim[0]*xim[0]))/m_N;
     for (int i = 1; i < m_N/2; i++)
-    mag[i]= 2 * (float) (std::sqrt(xre[i]*xre[i] + xim[i]*xim[i]))/m_N;
+    (*mag)[i]= 2 * (float) (std::sqrt(xre[i]*xre[i] + xim[i]*xim[i]))/m_N;
     return mag;
 }
 
@@ -185,13 +186,13 @@ int FastFourierTransform::smallestPowerOf2(int value)
     return i - 1;
 }
 
-void FastFourierTransform::printFft(const vector<float> fft, float sampleRate)
+void FastFourierTransform::printFft(const SharedFloatVec & fft, float sampleRate)
 {
-    float binWidth = fft.size() / sampleRate;
-    printf("Frame size: %d", (int)fft.size());
-    for (int i = 0 ; i < fft.size() ; i ++)
+    float binWidth = fft->size() / sampleRate;
+    printf("Frame size: %d", (int)fft->size());
+    for (int i = 0 ; i < fft->size() ; i ++)
     {
-        printf("%4.2f\t%4.2f", ((float) i) * binWidth, fft[i]);
+        printf("%4.2f\t%4.2f", ((float) i) * binWidth, (*fft)[i]);
     }
 }
 

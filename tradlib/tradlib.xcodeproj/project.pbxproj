@@ -7,6 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE0F04FE2953F8D10098B208 /* OrnamentationFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE0F04FC2953F8D10098B208 /* OrnamentationFilter.cpp */; };
+		CE0F05052954395B0098B208 /* TradlibProperties.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE0F05032954395B0098B208 /* TradlibProperties.cpp */; };
+		CE0F050829543BF80098B208 /* Logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE0F050629543BF80098B208 /* Logger.cpp */; };
+		CE0F050B29543E470098B208 /* TranscribedNote.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE0F050929543E470098B208 /* TranscribedNote.cpp */; };
+		CE0F050E29543E550098B208 /* FuzzyHistogram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE0F050C29543E550098B208 /* FuzzyHistogram.cpp */; };
+		CE0F05112954405D0098B208 /* EnergyCalculator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE0F050F2954405D0098B208 /* EnergyCalculator.cpp */; };
+		CE0F0514295443710098B208 /* SimpleHistogram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE0F0512295443710098B208 /* SimpleHistogram.cpp */; };
+		CE0F0517295446770098B208 /* ABCTranscriber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE0F0515295446770098B208 /* ABCTranscriber.cpp */; };
+		CE0F051A2954F4820098B208 /* StandardDeviationCalculator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE0F05182954F4820098B208 /* StandardDeviationCalculator.cpp */; };
+		CE0F051D2955017C0098B208 /* PitchDetector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE0F051B2955017C0098B208 /* PitchDetector.cpp */; };
+		CE0F0520295522570098B208 /* STFTTranscriber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE0F051E295522570098B208 /* STFTTranscriber.cpp */; };
+		CE0F0523295524DA0098B208 /* ODCFTranscriber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE0F0521295524DA0098B208 /* ODCFTranscriber.cpp */; };
+		CE0F052629552C6C0098B208 /* AudioPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE0F052429552C6C0098B208 /* AudioPlayer.cpp */; };
+		CE0F052929552C820098B208 /* AudioLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE0F052729552C820098B208 /* AudioLoader.cpp */; };
+		CE0F052C295576450098B208 /* WindowFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE0F052A295576450098B208 /* WindowFunction.cpp */; };
 		CEFD1A772951961A001451DE /* tradlib.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFD1A762951961A001451DE /* tradlib.swift */; };
 		CEFD1A8E295198D4001451DE /* FIRFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFD1A8C295198D4001451DE /* FIRFilter.cpp */; };
 		CEFD1A9A2951994C001451DE /* FastFourierTransform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFD1A982951994C001451DE /* FastFourierTransform.cpp */; };
@@ -29,6 +44,37 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		CE0F04FC2953F8D10098B208 /* OrnamentationFilter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OrnamentationFilter.cpp; sourceTree = "<group>"; };
+		CE0F04FD2953F8D10098B208 /* OrnamentationFilter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = OrnamentationFilter.hpp; sourceTree = "<group>"; };
+		CE0F0500295433440098B208 /* FileLogger.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FileLogger.hpp; sourceTree = "<group>"; };
+		CE0F05032954395B0098B208 /* TradlibProperties.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TradlibProperties.cpp; sourceTree = "<group>"; };
+		CE0F05042954395B0098B208 /* TradlibProperties.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TradlibProperties.hpp; sourceTree = "<group>"; };
+		CE0F050629543BF80098B208 /* Logger.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Logger.cpp; sourceTree = "<group>"; };
+		CE0F050729543BF80098B208 /* Logger.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Logger.hpp; sourceTree = "<group>"; };
+		CE0F050929543E470098B208 /* TranscribedNote.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TranscribedNote.cpp; sourceTree = "<group>"; };
+		CE0F050A29543E470098B208 /* TranscribedNote.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TranscribedNote.hpp; sourceTree = "<group>"; };
+		CE0F050C29543E550098B208 /* FuzzyHistogram.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FuzzyHistogram.cpp; sourceTree = "<group>"; };
+		CE0F050D29543E550098B208 /* FuzzyHistogram.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FuzzyHistogram.hpp; sourceTree = "<group>"; };
+		CE0F050F2954405D0098B208 /* EnergyCalculator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EnergyCalculator.cpp; sourceTree = "<group>"; };
+		CE0F05102954405D0098B208 /* EnergyCalculator.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EnergyCalculator.hpp; sourceTree = "<group>"; };
+		CE0F0512295443710098B208 /* SimpleHistogram.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SimpleHistogram.cpp; sourceTree = "<group>"; };
+		CE0F0513295443710098B208 /* SimpleHistogram.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SimpleHistogram.hpp; sourceTree = "<group>"; };
+		CE0F0515295446770098B208 /* ABCTranscriber.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ABCTranscriber.cpp; sourceTree = "<group>"; };
+		CE0F0516295446770098B208 /* ABCTranscriber.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ABCTranscriber.hpp; sourceTree = "<group>"; };
+		CE0F05182954F4820098B208 /* StandardDeviationCalculator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StandardDeviationCalculator.cpp; sourceTree = "<group>"; };
+		CE0F05192954F4820098B208 /* StandardDeviationCalculator.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = StandardDeviationCalculator.hpp; sourceTree = "<group>"; };
+		CE0F051B2955017C0098B208 /* PitchDetector.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PitchDetector.cpp; sourceTree = "<group>"; };
+		CE0F051C2955017C0098B208 /* PitchDetector.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PitchDetector.hpp; sourceTree = "<group>"; };
+		CE0F051E295522570098B208 /* STFTTranscriber.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = STFTTranscriber.cpp; sourceTree = "<group>"; };
+		CE0F051F295522570098B208 /* STFTTranscriber.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = STFTTranscriber.hpp; sourceTree = "<group>"; };
+		CE0F0521295524DA0098B208 /* ODCFTranscriber.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ODCFTranscriber.cpp; sourceTree = "<group>"; };
+		CE0F0522295524DA0098B208 /* ODCFTranscriber.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ODCFTranscriber.hpp; sourceTree = "<group>"; };
+		CE0F052429552C6C0098B208 /* AudioPlayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AudioPlayer.cpp; sourceTree = "<group>"; };
+		CE0F052529552C6C0098B208 /* AudioPlayer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AudioPlayer.hpp; sourceTree = "<group>"; };
+		CE0F052729552C820098B208 /* AudioLoader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AudioLoader.cpp; sourceTree = "<group>"; };
+		CE0F052829552C820098B208 /* AudioLoader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AudioLoader.hpp; sourceTree = "<group>"; };
+		CE0F052A295576450098B208 /* WindowFunction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = WindowFunction.cpp; sourceTree = "<group>"; };
+		CE0F052B295576450098B208 /* WindowFunction.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = WindowFunction.hpp; sourceTree = "<group>"; };
 		CEFD1A732951961A001451DE /* libtradlib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libtradlib.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEFD1A762951961A001451DE /* tradlib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tradlib.swift; sourceTree = "<group>"; };
 		CEFD1A8B295198D4001451DE /* tradlib-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "tradlib-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -58,6 +104,52 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CE0F04FB2953F8B90098B208 /* transcription */ = {
+			isa = PBXGroup;
+			children = (
+				CE0F04FC2953F8D10098B208 /* OrnamentationFilter.cpp */,
+				CE0F04FD2953F8D10098B208 /* OrnamentationFilter.hpp */,
+				CE0F0500295433440098B208 /* FileLogger.hpp */,
+				CE0F050929543E470098B208 /* TranscribedNote.cpp */,
+				CE0F050A29543E470098B208 /* TranscribedNote.hpp */,
+				CE0F050C29543E550098B208 /* FuzzyHistogram.cpp */,
+				CE0F050D29543E550098B208 /* FuzzyHistogram.hpp */,
+				CE0F050F2954405D0098B208 /* EnergyCalculator.cpp */,
+				CE0F05102954405D0098B208 /* EnergyCalculator.hpp */,
+				CE0F0512295443710098B208 /* SimpleHistogram.cpp */,
+				CE0F0513295443710098B208 /* SimpleHistogram.hpp */,
+				CE0F0515295446770098B208 /* ABCTranscriber.cpp */,
+				CE0F0516295446770098B208 /* ABCTranscriber.hpp */,
+				CE0F05182954F4820098B208 /* StandardDeviationCalculator.cpp */,
+				CE0F05192954F4820098B208 /* StandardDeviationCalculator.hpp */,
+				CE0F051B2955017C0098B208 /* PitchDetector.cpp */,
+				CE0F051C2955017C0098B208 /* PitchDetector.hpp */,
+				CE0F051E295522570098B208 /* STFTTranscriber.cpp */,
+				CE0F051F295522570098B208 /* STFTTranscriber.hpp */,
+				CE0F0521295524DA0098B208 /* ODCFTranscriber.cpp */,
+				CE0F0522295524DA0098B208 /* ODCFTranscriber.hpp */,
+				CE0F052A295576450098B208 /* WindowFunction.cpp */,
+				CE0F052B295576450098B208 /* WindowFunction.hpp */,
+			);
+			path = transcription;
+			sourceTree = "<group>";
+		};
+		CE0F0502295439350098B208 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				CEFD1AA8295256D5001451DE /* TradlibCommon.hpp */,
+				CE0F05032954395B0098B208 /* TradlibProperties.cpp */,
+				CE0F05042954395B0098B208 /* TradlibProperties.hpp */,
+				CE0F050629543BF80098B208 /* Logger.cpp */,
+				CE0F050729543BF80098B208 /* Logger.hpp */,
+				CE0F052429552C6C0098B208 /* AudioPlayer.cpp */,
+				CE0F052529552C6C0098B208 /* AudioPlayer.hpp */,
+				CE0F052729552C820098B208 /* AudioLoader.cpp */,
+				CE0F052829552C820098B208 /* AudioLoader.hpp */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		CEFD1A6A2951961A001451DE = {
 			isa = PBXGroup;
 			children = (
@@ -86,7 +178,8 @@
 		CEFD1A7D295196B7001451DE /* cpp */ = {
 			isa = PBXGroup;
 			children = (
-				CEFD1AA8295256D5001451DE /* TradlibCommon.hpp */,
+				CE0F0502295439350098B208 /* Common */,
+				CE0F04FB2953F8B90098B208 /* transcription */,
 				CEFD1A7E295196B7001451DE /* dsp */,
 			);
 			name = cpp;
@@ -173,11 +266,26 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEFD1A9A2951994C001451DE /* FastFourierTransform.cpp in Sources */,
+				CE0F052929552C820098B208 /* AudioLoader.cpp in Sources */,
+				CE0F050829543BF80098B208 /* Logger.cpp in Sources */,
 				CEFD1AA32951997B001451DE /* SpectralCentroid.cpp in Sources */,
 				CEFD1A772951961A001451DE /* tradlib.swift in Sources */,
+				CE0F050B29543E470098B208 /* TranscribedNote.cpp in Sources */,
+				CE0F052629552C6C0098B208 /* AudioPlayer.cpp in Sources */,
+				CE0F050E29543E550098B208 /* FuzzyHistogram.cpp in Sources */,
+				CE0F0514295443710098B208 /* SimpleHistogram.cpp in Sources */,
 				CEFD1A8E295198D4001451DE /* FIRFilter.cpp in Sources */,
+				CE0F05112954405D0098B208 /* EnergyCalculator.cpp in Sources */,
+				CE0F05052954395B0098B208 /* TradlibProperties.cpp in Sources */,
 				CEFD1AA62951998B001451DE /* TimeDomainCombFilter.cpp in Sources */,
+				CE0F04FE2953F8D10098B208 /* OrnamentationFilter.cpp in Sources */,
+				CE0F0517295446770098B208 /* ABCTranscriber.cpp in Sources */,
 				CEFD1A9D2951995C001451DE /* FrequencyDomainCombFilter.cpp in Sources */,
+				CE0F0520295522570098B208 /* STFTTranscriber.cpp in Sources */,
+				CE0F052C295576450098B208 /* WindowFunction.cpp in Sources */,
+				CE0F051D2955017C0098B208 /* PitchDetector.cpp in Sources */,
+				CE0F0523295524DA0098B208 /* ODCFTranscriber.cpp in Sources */,
+				CE0F051A2954F4820098B208 /* StandardDeviationCalculator.cpp in Sources */,
 				CEFD1AA02951996C001451DE /* PeakCalculator.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
