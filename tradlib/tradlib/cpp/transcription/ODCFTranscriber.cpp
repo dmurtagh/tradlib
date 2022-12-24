@@ -38,7 +38,6 @@ void ODCFTranscriber::setAudioData(const SharedByteVec & audioData, SharedFloatV
     
     FastFourierTransform fft;
     SharedFloatVec ffts = fft.fftMag(signal, 0, m_FrameSize);
-    PitchDetector pitchDetector;
     
     Logger::log("Removing silence at the start...");
     removeSilence();
@@ -84,13 +83,13 @@ void ODCFTranscriber::removeSilence()
         }
         Logger::log(std::to_string((float) i / m_SampleRate) + " seconds of silence removed from the start");
         m_Signal = newSignal;
-        numSamples = (int)m_Signal->size();
+        m_NumSamples = (int)m_Signal->size();
     }
     else
     {
         Logger::log("No audio found!");
         m_Signal = makeSharedFloatVec(0);
-        numSamples = 0;
+        m_NumSamples = 0;
     }
 }
 
@@ -115,7 +114,7 @@ void ODCFTranscriber::transcribe(const std::string & fundamentalNote /*not sure 
     
     m_DynamicThresholdTime = TradlibProperties::getInt("DynamicThresholdTime");
     
-    if (numSamples == 0)
+    if (m_NumSamples == 0)
     {
         // Something went wrong???
         Logger::log("No samples loaded, audio may be below the slience threshold...");
@@ -123,7 +122,7 @@ void ODCFTranscriber::transcribe(const std::string & fundamentalNote /*not sure 
     
     Logger::log("Configuring filters...");
     configureFilters();
-    int numHops = (numSamples / m_HopSize);
+    int numHops = (m_NumSamples / m_HopSize);
     int odfSize =  numHops - 1;
     
     SharedFloatVec frame = makeSharedFloatVec(m_FrameSize);
@@ -145,7 +144,7 @@ void ODCFTranscriber::transcribe(const std::string & fundamentalNote /*not sure 
         //m_GUI.getProgressBar().setValue(hopIndex);
         // Logger.log("Calculating harmonicity at sample " + (hopIndex * hopSize));
         
-        if (((hopIndex * m_HopSize) + m_FrameSize) > numSamples)
+        if (((hopIndex * m_HopSize) + m_FrameSize) > m_NumSamples)
         {
             break;
         }
@@ -153,7 +152,7 @@ void ODCFTranscriber::transcribe(const std::string & fundamentalNote /*not sure 
         for (int frameIndex = 0 ; frameIndex < m_FrameSize; frameIndex ++)
         {
             currentSample = (hopIndex * m_HopSize) + frameIndex;
-            frame[frameIndex] = m_Signal[currentSample];
+            (*frame)[frameIndex] = (*m_Signal)[currentSample];
         }
         
         // Calculate the energy in each frequency range
@@ -274,7 +273,17 @@ void ODCFTranscriber::transcribe(const std::string & fundamentalNote /*not sure 
     if (TradlibProperties::getString("searchMethod") == "semex")
     {
         abcTranscriber.convertToABC();
-        m_AbcTranscription = MIDITools.instance().arrayToString(abcTranscriber.quantisedMidi);
+        
+        // Convert the quantisedMidi from an array to a string
+        m_AbcTranscription = "";
+        for (int i = 0 ; i < abcTranscriber.m_QuantizedMidi.size() ; i ++)
+        {
+            m_AbcTranscription.push_back('0' + abcTranscriber.m_QuantizedMidi[i]);
+            if (i < abcTranscriber.m_QuantizedMidi.size() - 1)
+            {
+                m_AbcTranscription.push_back(',');
+            }
+        }
     }
     
     if (TradlibProperties::getString("mode") == "client")
@@ -337,7 +346,7 @@ void ODCFTranscriber::setSampleRate(int sampleRate)
 
 int ODCFTranscriber::getNumSamples()
 {
-    return numSamples;
+    return m_NumSamples;
 }
 
 void ODCFTranscriber::setNumSamples(int numSamples)
@@ -379,7 +388,7 @@ SharedFloatVec ODCFTranscriber::getSignal()
 void ODCFTranscriber::setSignal(const SharedFloatVec & signal)
 {
     m_Signal = signal;
-    numSamples = (int)signal->size();
+    m_NumSamples = (int)signal->size();
 }
 
 const std::string & ODCFTranscriber::getAbcTranscription()
@@ -431,7 +440,7 @@ void ODCFTranscriber::removeSpuriousOnsets(SharedIntVec & onsetsVector, const Sh
             iter = onsetsVector->erase(iter);
         }
         // Or if the onset is lower than the threshold
-        else if (odf[onsetIndex] < odfThreshold[thresholdIndex])
+        else if ((*odf)[onsetIndex] < (*odfThreshold)[thresholdIndex])
         {
             iter = onsetsVector->erase(iter);
         }
@@ -563,14 +572,13 @@ SharedFloatVec ODCFTranscriber::calculateDynamicThreshold(const SharedFloatVec &
     int numThresholds = (int)odf->size() / dynamicThresholdWidth;
     SharedFloatVec odfThreshold = makeSharedFloatVec(numThresholds);
     Stats odfStats(odf);
-    staticThreshold = odfStats.average();
+    m_StaticThreshold = odfStats.average();
     int odfThresholdIndex = 0;
-    //for (int i = 0 ; i < (odf.length - dynamicThresholdWidth); i += dynamicThresholdWidth)
     for (int i = 0 ; i < (odf->size() - dynamicThresholdWidth); i += dynamicThresholdWidth)
     {
         odfStats.setStart(i);
         odfStats.setEnd(i + dynamicThresholdWidth);
-        (*odfThreshold)[odfThresholdIndex] = staticThreshold  + odfStats.standardDeviation();
+        (*odfThreshold)[odfThresholdIndex] = m_StaticThreshold  + odfStats.standardDeviation();
         odfThresholdIndex ++;
     }
     return odfThreshold;

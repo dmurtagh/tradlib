@@ -23,7 +23,6 @@ namespace tradlib
         
     public:
         
-        /** Creates a new instance of CombFilter */
         TimeDomainCombFilter() {}
         
         SharedFloatVec getFrame();

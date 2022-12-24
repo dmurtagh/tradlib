@@ -24,13 +24,13 @@ namespace tradlib
         int frameSize;
         float binSize;
         
-        FrequencyDomainCombFilter();
-        
         FrequencyDomainCombFilter(float fundamental, int sampleRate);
         
         void calculateBinSize();
         
     public:
+        
+        FrequencyDomainCombFilter();
         
         const SharedFloatVec getFftMag();
         
@@ -54,5 +54,6 @@ namespace tradlib
         
         bool harmonicInRange(float lower, float upper);
         
-        float calculateOutputEnergy();    };
+        float calculateOutputEnergy();
+    };
 }

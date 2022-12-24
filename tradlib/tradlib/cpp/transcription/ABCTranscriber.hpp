@@ -31,25 +31,25 @@ namespace tradlib
         enum pitch_model {FLUTE, WHISTLE};
         
         static constexpr int NOTE_NAMES_LEN = 33;
-        const std::string noteNames[NOTE_NAMES_LEN] = {"D,", "E,", "F,", "G,", "A,", "B,", "C", "C", "D", "E", "F", "G", "A", "B","c", "c", "d", "e", "f", "g", "a", "b", "c'", "c'", "d'", "e'", "f'", "g'", "a'", "b'", "c''", "c''", "d''"};
+        const std::string kNoteNames[NOTE_NAMES_LEN] = {"D,", "E,", "F,", "G,", "A,", "B,", "C", "C", "D", "E", "F", "G", "A", "B","c", "c", "d", "e", "f", "g", "a", "b", "c'", "c'", "d'", "e'", "f'", "g'", "a'", "b'", "c''", "c''", "d''"};
         static float knownFrequencies[NOTE_NAMES_LEN];
-        static float midiNotes[87];
+        static float m_MidiNotes[87];
         
         static constexpr int MIDI_OFFSET = 21;
-        vector<int> quantisedMidi;
+        vector<int> m_QuantizedMidi;
         
         // public static final float D3 = 146.83f;
         // public static final float D4=  293.66f; // Start transcription of the whistle one octive up
         
     private:
         static constexpr float RANGE = 0.1f;
-        int tuneType = REEL;
+        int m_TuneType = REEL;
         
-        pitch_model pitchModel;
-        float maxEnergy;
-        float averageEnergy;
+        pitch_model m_PitchModel;
+        float m_MaxEnergy;
+        float m_AverageEnergy;
         
-        SharedTranscribedNotesVec transcribedNotes;
+        SharedTranscribedNotesVec m_TranscribedNotes;
         ODCFTranscriber * m_Transcriber = nullptr;
         
     public:

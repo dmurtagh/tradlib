@@ -29,12 +29,12 @@ namespace tradlib
         //GUI m_GUI;
         
     private:
-        int numFilters = 12;
+        int m_NumFilters = 12;
         SharedByteVec m_AudioData;
-        int numSamples;
+        int m_NumSamples;
         
-        vector<float> m_OldPowers = vector<float>(numFilters);
-        vector<float> m_Powers = vector<float>(numFilters);
+        vector<float> m_OldPowers = vector<float>(m_NumFilters);
+        vector<float> m_Powers = vector<float>(m_NumFilters);
         std::string m_AbcTranscription;
         
         float m_SilenceThreshold = 1500.0f;
@@ -42,7 +42,7 @@ namespace tradlib
         
         int m_DynamicThresholdTime = 100; // in milliseconds
         
-        vector<TimeDomainCombFilter> m_TdFilters = vector<TimeDomainCombFilter>(numFilters);
+        vector<TimeDomainCombFilter> m_TdFilters = vector<TimeDomainCombFilter>(m_NumFilters);
         vector<FrequencyDomainCombFilter> m_FdFilters = vector<FrequencyDomainCombFilter>(24);
         
         // ToDo: Remove GUI Elements from here...
@@ -52,7 +52,7 @@ namespace tradlib
         
         // ToDo Remove this:
         //SourceDataLine line = null;
-        float staticThreshold = 0;
+        float m_StaticThreshold = 0;
         
     public:
         ODCFTranscriber();

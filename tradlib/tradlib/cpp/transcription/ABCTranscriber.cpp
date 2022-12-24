@@ -18,12 +18,12 @@ using namespace tradlib;
 
 ABCTranscriber::ABCTranscriber()
 {
-    pitchModel = pitch_model::FLUTE;
+    m_PitchModel = pitch_model::FLUTE;
 }
 
 ABCTranscriber::ABCTranscriber(ODCFTranscriber * pTranscriber)
 {
-    this->transcribedNotes = pTranscriber->getTranscribedNotes();
+    this->m_TranscribedNotes = pTranscriber->getTranscribedNotes();
     this->m_Transcriber = pTranscriber;
     makeMidiNotes();
 }
@@ -47,34 +47,34 @@ std::string ABCTranscriber::spell(float frequency)
             min = distance[j];
         }
     }
-    return noteNames[minIndex];
+    return kNoteNames[minIndex];
 }
 
 SharedTranscribedNotesVec ABCTranscriber::getTranscribedNotes()
 {
-    return transcribedNotes;
+    return m_TranscribedNotes;
 }
 
 void ABCTranscriber::setTranscribedNotes(const SharedTranscribedNotesVec & transcribedNotes)
 {
-    this->transcribedNotes = transcribedNotes;
+    this->m_TranscribedNotes = transcribedNotes;
 }
 
 ABCTranscriber::pitch_model ABCTranscriber::getPitchModel()
 {
-    return pitchModel;
+    return m_PitchModel;
 }
 
 void ABCTranscriber::setPitchModel(ABCTranscriber::pitch_model pitchModel)
 {
-    this->pitchModel = pitchModel;
+    this->m_PitchModel = pitchModel;
 }
 
 void ABCTranscriber::testScale()
 {
     for (int i = 0 ; i < NOTE_NAMES_LEN ; i ++)
     {
-        Logger::log(noteNames[i] + "\t");
+        Logger::log(kNoteNames[i] + "\t");
         
         // ToDo: Should ABCTranscriber be coupled to TonePlayer? Probably Not
         //TonePlayer.playTone(knownFrequencies[i], 0.25f, 0.1f);
@@ -101,7 +101,7 @@ void ABCTranscriber::makeScale(const std::string & mode) // Todo: Make this an e
     int majorKeyIntervals[] = {1, 2, 4, 5};
     if (mode == ("Major"))
     {
-        if (pitchModel == pitch_model::FLUTE)
+        if (m_PitchModel == pitch_model::FLUTE)
         {
             knownFrequencies[0] = TradlibProperties::getFloat(TradlibProperties::getString("fundamentalNote")) / (float) std::pow(RATIO, 12);
         }
@@ -126,31 +126,30 @@ void ABCTranscriber::makeScale(const std::string & mode) // Todo: Make this an e
     Logger::log("FREQUENCIES:");
     for (int i = 0 ; i < NOTE_NAMES_LEN ; i ++)
     {
-        Logger::log(noteNames[i] + "\t" + std::to_string(knownFrequencies[i]));
+        Logger::log(kNoteNames[i] + "\t" + std::to_string(knownFrequencies[i]));
     }
     
 }
 
 void ABCTranscriber::makeMidiNotes()
 {
-    midiNotes[0] = 27.5f;
+    m_MidiNotes[0] = 27.5f;
     for (int i = 1 ; i < MIDI_NOTES ; i ++)
     {
-        midiNotes[i] = midiNotes[i - 1] * RATIO;
+        m_MidiNotes[i] = m_MidiNotes[i - 1] * RATIO;
     }
 }
 
 std::string ABCTranscriber::convertToMidi()
 {
     std::string ret;
-    auto & pTranscribedNotes = *transcribedNotes;
-    for (int i = 0 ; i < pTranscribedNotes.size(); i ++)
+    for (int i = 0 ; i < m_TranscribedNotes->size(); i ++)
     {
         vector<float> distance(MIDI_NOTES);
         
         for (int j = 0 ; j < MIDI_NOTES ; j ++)
         {
-            float difference = pTranscribedNotes[i].getFrequency() - midiNotes[j];
+            float difference = (*m_TranscribedNotes)[i].getFrequency() - m_MidiNotes[j];
             
             distance[j] = difference * difference;
         }
@@ -165,11 +164,11 @@ std::string ABCTranscriber::convertToMidi()
             }
         }
         ret.append(std::to_string(minIndex + MIDI_OFFSET));
-        if (i < pTranscribedNotes.size() - 1)
+        if (i < m_TranscribedNotes->size() - 1)
         {
             ret.append(",");
         }
-        pTranscribedNotes[i].setMidiNote(minIndex + MIDI_OFFSET);
+        (*m_TranscribedNotes)[i].setMidiNote(minIndex + MIDI_OFFSET);
     }
     return ret;
 }
@@ -179,10 +178,9 @@ std::string ABCTranscriber::convertToParsons()
     convertToMidi();
     std::string parsons;
     float previousNote = -1;
-    auto & pTranscribedNotes = *transcribedNotes;
-    for (int i = 0 ; i < pTranscribedNotes.size() ; i ++)
+    for (int i = 0 ; i < m_TranscribedNotes->size() ; i ++)
     {
-        float currentNote = pTranscribedNotes[i].getMidiNote();
+        float currentNote = (*m_TranscribedNotes)[i].getMidiNote();
         // No parsons code for the first note
         if (previousNote != -1)
         {
@@ -221,15 +219,14 @@ std::string ABCTranscriber::convertToABC()
     Logger::log("Max energy in signal: " + energyCalculator.formatEnergy(getMaxEnergy()));
     Logger::log("Average energy in signal: " + energyCalculator.formatEnergy(getAverageEnergy()));
     int quaverQ = 0;
-    auto & pTranscribedNotes = *transcribedNotes;
-    for (int i = 0 ; i < pTranscribedNotes.size() ; i ++)
+    for (int i = 0 ; i < m_TranscribedNotes->size() ; i ++)
     {
         bool found = false;
-        pTranscribedNotes[i].setQuaverQ(quaverQ);
-        if (isBreath(pTranscribedNotes[i]))
+        (*m_TranscribedNotes)[i].setQuaverQ(quaverQ);
+        if (isBreath((*m_TranscribedNotes)[i]))
         {
             Logger::log("Breath detected at frame: " + std::to_string(i));
-            pTranscribedNotes[i].setSpelling("z");
+            (*m_TranscribedNotes)[i].setSpelling("z");
             if (abcString.length() != 0)
             {
                 found = true;
@@ -241,25 +238,25 @@ std::string ABCTranscriber::convertToABC()
         }
         else
         {
-            std::string closest = spell(pTranscribedNotes[i].getFrequency());
+            std::string closest = spell((*m_TranscribedNotes)[i].getFrequency());
             found = true;
-            pTranscribedNotes[i].setSpelling(closest);
+            (*m_TranscribedNotes)[i].setSpelling(closest);
         }
         if (found)
         {
             
-            if ((abcString.length() > 0) && (abcString[abcString.length() - 1] == 'z') && (pTranscribedNotes[i].getSpelling() == ("z")))
+            if ((abcString.length() > 0) && (abcString[abcString.length() - 1] == 'z') && ((*m_TranscribedNotes)[i].getSpelling() == ("z")))
             {
                 continue;
             }
             
-            abcString.append(pTranscribedNotes[i].getSpelling());
-            qMidi.push_back(pTranscribedNotes[i].getMidiNote());
+            abcString.append((*m_TranscribedNotes)[i].getSpelling());
+            qMidi.push_back((*m_TranscribedNotes)[i].getMidiNote());
             // A breath should never be longer than a single note
             int nearestMultiple = 0;
-            if (!(pTranscribedNotes[i].getSpelling() == ("z")))
+            if (!((*m_TranscribedNotes)[i].getSpelling() == ("z")))
             {
-                nearestMultiple = pTranscribedNotes[i].getMultiple();
+                nearestMultiple = (*m_TranscribedNotes)[i].getMultiple();
                 if (nearestMultiple > 1)
                 {
                     // Quantise at dottet crochets
@@ -279,15 +276,15 @@ std::string ABCTranscriber::convertToABC()
             
             
             quaverQ += nearestMultiple;
-            pTranscribedNotes[i].setMultiple(nearestMultiple);
-            if (quaverQ % NOTES_PER_BAR[tuneType] == 0)
+            (*m_TranscribedNotes)[i].setMultiple(nearestMultiple);
+            if (quaverQ % NOTES_PER_BAR[m_TuneType] == 0)
             {
                 // abcString.append("|" + System.getProperty("line.separator"));
             }
         }
         else
         {
-            Logger::log("Ignoring: " + pTranscribedNotes[i].toString());
+            Logger::log("Ignoring: " + (*m_TranscribedNotes)[i].toString());
         }
     }
     // Now remove z's at the end
@@ -298,17 +295,17 @@ std::string ABCTranscriber::convertToABC()
     }
     abcString = abcString.substr(0,trimmedStringLength);
     
-    quantisedMidi = vector<int>(qMidi.size());
+    m_QuantizedMidi = vector<int>(qMidi.size());
     for (int i = 0; i < qMidi.size(); i++)
     {
-        quantisedMidi[i] = qMidi[i];
+        m_QuantizedMidi[i] = qMidi[i];
     }
     return abcString;
 }
 
 bool ABCTranscriber::isBreath(const TranscribedNote & note)
 {
-    float threshold = averageEnergy * TradlibProperties::getFloat("breathThreshold");
+    float threshold = m_AverageEnergy * TradlibProperties::getFloat("breathThreshold");
     
     if (note.getEnergy() < threshold)
     {
@@ -326,12 +323,12 @@ bool ABCTranscriber::isBreath(const TranscribedNote & note)
 
 int ABCTranscriber::getTuneType()
 {
-    return tuneType;
+    return m_TuneType;
 }
 
 void ABCTranscriber::setTuneType(int tuneType)
 {
-    this->tuneType = tuneType;
+    this->m_TuneType = tuneType;
 }
 
 void ABCTranscriber::printScale()
@@ -339,20 +336,19 @@ void ABCTranscriber::printScale()
     Logger::log("SCALE:");
     for (int i = 0 ; i < NOTE_NAMES_LEN; i ++)
     {
-        Logger::log(noteNames[i] + ": " + std::to_string(knownFrequencies[i]));
+        Logger::log(kNoteNames[i] + ": " + std::to_string(knownFrequencies[i]));
     }
 }
 
 float ABCTranscriber::calculateStandardNoteDuration()
 {
     float duration = 0.0f;
-    auto & pTranscribedNotes = *transcribedNotes;
-    vector<float> histData(pTranscribedNotes.size());
+    SharedFloatVec histData = makeSharedFloatVec(m_TranscribedNotes->size());
     FuzzyHistogram fuzzyHistogram;
     
-    for (int i = 0 ; i < pTranscribedNotes.size() ; i ++)
+    for (int i = 0 ; i < m_TranscribedNotes->size() ; i ++)
     {
-        histData[i] = pTranscribedNotes[i].getDuration();
+        (*histData)[i] = (*m_TranscribedNotes)[i].getDuration();
     }
     duration = fuzzyHistogram.calculatePeek(histData, 0.3f);
     return duration;
@@ -360,22 +356,22 @@ float ABCTranscriber::calculateStandardNoteDuration()
 
 float ABCTranscriber::getMaxEnergy() const
 {
-    return maxEnergy;
+    return m_MaxEnergy;
 }
 
 void ABCTranscriber::setMaxEnergy(float maxEnergy)
 {
-    this->maxEnergy = maxEnergy;
+    this->m_MaxEnergy = maxEnergy;
 }
 
 float ABCTranscriber::getAverageEnergy() const
 {
-    return averageEnergy;
+    return m_AverageEnergy;
 }
 
 void ABCTranscriber::setAverageEnergy(float averageEnergy)
 {
-    this->averageEnergy = averageEnergy;
+    this->m_AverageEnergy = averageEnergy;
 }
 
 void ABCTranscriber::calculatePitchModel()
@@ -384,14 +380,13 @@ void ABCTranscriber::calculatePitchModel()
     // Then its probably a tin whistle
     int flute = 0, whistle = 0;
     float G5 = (float) (TradlibProperties::getFloat(TradlibProperties::getString("fundamentalNote")) * std::pow(RATIO, 17.0f));
-    auto & pTranscribedNotes = (*transcribedNotes);
-    for (int i = 0 ; i < pTranscribedNotes.size() ; i ++)
+    for (int i = 0 ; i < m_TranscribedNotes->size() ; i ++)
     {
-        if (isBreath(pTranscribedNotes[i]))
+        if (isBreath((*m_TranscribedNotes)[i]))
         {
             continue;
         }
-        if (pTranscribedNotes[i].getFrequency() < G5)
+        if ((*m_TranscribedNotes)[i].getFrequency() < G5)
         {
             flute ++;
         }
@@ -401,8 +396,8 @@ void ABCTranscriber::calculatePitchModel()
         }
     }
     
-    pitchModel = (flute >= whistle) ? pitch_model::FLUTE : pitch_model::WHISTLE;
-    Logger::log(std::string("Using ") + ((pitchModel == pitch_model::FLUTE) ? "flute " : "whistle ") + " pitch model");
+    m_PitchModel = (flute >= whistle) ? pitch_model::FLUTE : pitch_model::WHISTLE;
+    Logger::log(std::string("Using ") + ((m_PitchModel == pitch_model::FLUTE) ? "flute " : "whistle ") + " pitch model");
 }
 
 void ABCTranscriber::test()
