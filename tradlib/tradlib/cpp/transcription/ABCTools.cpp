@@ -249,8 +249,8 @@ void ABCTools::stripBarDivisions(std::string & notes)
 void ABCTools::removeTripletMarks(std::string & notes)
 {
     std::string stripped;
+    
     // First remove ornaments
-    bool inOrnament = false;
     for (int i = 0 ;  i < notes.length(); i ++)
     {
         char c  = notes[i];

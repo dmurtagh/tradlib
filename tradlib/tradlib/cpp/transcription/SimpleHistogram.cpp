@@ -14,8 +14,8 @@ float SimpleHistogram::calculatePeek()
     //Hashtable temp = new Hashtable();
     unordered_map<int,int> frequencies;
     
-    auto & pData = *data;
-    for (int i = 0 ; i < data->size() ; i ++)
+    auto & pData = *m_Data;
+    for (int i = 0 ; i < m_Data->size() ; i ++)
     {
         int key = std::round(pData[i]);
         frequencies[key]++;
@@ -35,10 +35,10 @@ float SimpleHistogram::calculatePeek()
 
 SharedFloatVec SimpleHistogram::getData()
 {
-    return data;
+    return m_Data;
 }
 
 void SimpleHistogram::setData(const SharedFloatVec & data)
 {
-    this->data = data;
+    this->m_Data = data;
 }

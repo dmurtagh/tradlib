@@ -107,7 +107,6 @@ SharedIntVec PeakCalculator::calculatePeaks(const SharedFloatVec & data, int bor
 
 float calculateThresholdValue(const SharedFloatVec & data, int howFar, float thresholdNormal)
 {
-    float thresholdValue = std::numeric_limits<float>::max();
     // First calculate the threshold
     float min = std::numeric_limits<float>::max(), max = std::numeric_limits<float>::min();
     if (thresholdNormal > 0)

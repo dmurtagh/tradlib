@@ -18,11 +18,11 @@ namespace tradlib
     class FrequencyDomainCombFilter
     {
     private:
-        SharedFloatVec fftMag;
-        float fundamental;
-        int sampleRate;
-        int frameSize;
-        float binSize;
+        SharedFloatVec m_FftMag;
+        float m_Fundamental;
+        int m_SampleRate;
+        int m_FrameSize;
+        float m_BinSize;
         
         FrequencyDomainCombFilter(float fundamental, int sampleRate);
         

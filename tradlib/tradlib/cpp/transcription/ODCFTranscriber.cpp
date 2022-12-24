@@ -541,9 +541,9 @@ SharedTranscribedNotesVec ODCFTranscriber::calculateNotesUsingFFT(const SharedFl
     SharedTranscribedNotesVec postProcessed = opp.filter();
     for (int i = 0 ; i < postProcessed->size() ; i ++)
     {
-        float start = (*postProcessed)[i].getStart();
         
         // ToDo: fix graph
+        //float start = (*postProcessed)[i].getStart();
         //float sigStart = start * m_SampleRate;
         //signalGraph.getDefaultSeries().addVerticalLine(sigStart);
     }

@@ -21,29 +21,10 @@ namespace tradlib
         
     public:
         
-        bool isIsPlaying()
-        {
-            return m_isPlaying;
-        }
+        bool isIsPlaying();
         
-        void setIsPlaying(bool isPlaying)
-        {
-            m_isPlaying = isPlaying;
-        }
-        void playTranscription(const std::vector<TranscribedNote> & transcribedNotes)
-        {
-            m_isPlaying = true;
-            for (int i = 0 ; i < transcribedNotes.size(); i ++)
-            {
-                if (!m_isPlaying)
-                {
-                    break;
-                }
-                
-                // ToDo: Hook up TonePlayer
-                //TonePlayer.playTone(transcribedNotes[i].getFrequency(), transcribedNotes[i].getDuration(), 0.25f);
-            }
-            m_isPlaying = false;
-        }
+        void setIsPlaying(bool isPlaying);
+        
+        void playTranscription(const std::vector<TranscribedNote> & transcribedNotes);
     };
 }

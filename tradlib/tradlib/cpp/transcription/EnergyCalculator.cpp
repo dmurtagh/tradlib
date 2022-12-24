@@ -18,21 +18,21 @@ EnergyCalculator::EnergyCalculator()
         
 EnergyCalculator::EnergyCalculator(const SharedFloatVec & signal, int start, int end)
 {
-    this->signal = signal;
-    this->start = start;
-    this->end = end;
+    this->m_Signal = signal;
+    this->m_Start = start;
+    this->m_End = end;
 }
 
 float EnergyCalculator::calculateEnergy()
 {
     float energy = 0;
-    for (int i = start  ; i <= end ; i ++)
+    for (int i = m_Start  ; i <= m_End ; i ++)
     {
-        if (i == signal->size())
+        if (i == m_Signal->size())
         {
             break;
         }
-        energy += abs((*signal)[i]);
+        energy += abs((*m_Signal)[i]);
     }
     return energy;
 }
@@ -40,7 +40,7 @@ float EnergyCalculator::calculateEnergy()
 float EnergyCalculator::calculateAverageEnergy()
 {
     float energy = calculateEnergy();
-    float size = (end - start) - 1;
+    float size = (m_End - m_Start) - 1;
     energy = energy / size;
     return energy;
 }
@@ -48,9 +48,9 @@ float EnergyCalculator::calculateAverageEnergy()
 float EnergyCalculator::calculateMaxEnergy()
 {
     float energy = 0;
-    for (int i = start  ; i <= end ; i ++)
+    for (int i = m_Start  ; i <= m_End ; i ++)
     {
-        float current = abs((*signal)[i]);
+        float current = abs((*m_Signal)[i]);
         if (current > energy)
         {
             energy = current;
@@ -68,37 +68,37 @@ std::string EnergyCalculator::formatEnergy(float energy)
         return result;
     
     size_t end_pos = result.size() < decimal_pos + 2 ? result.size() : decimal_pos + 2;
-    return result.substr(0,decimal_pos + 2);
+    return result.substr(0,end_pos);
 }
 
 int EnergyCalculator::getStart()
 {
-    return start;
+    return m_Start;
 }
 
 void EnergyCalculator::setStart(int start)
 {
-    this->start = start;
+    this->m_Start = start;
 }
 
 int EnergyCalculator::getEnd()
 {
-    return end;
+    return m_End;
 }
 
 void EnergyCalculator::setEnd(int end)
 {
-    this->end = end;
+    this->m_End = end;
 }
 
 SharedFloatVec EnergyCalculator::getSignal()
 {
-    return signal;
+    return m_Signal;
 }
 
 void EnergyCalculator::setSignal(const SharedFloatVec & signal)
 {
-    this->signal = signal;
-    start = 0;
-    end = signal->size() - 1;
+    this->m_Signal = signal;
+    m_Start = 0;
+    m_End = (int)signal->size() - 1;
 }

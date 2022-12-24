@@ -24,6 +24,7 @@
 		CE0F052C295576450098B208 /* WindowFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE0F052A295576450098B208 /* WindowFunction.cpp */; };
 		CE0F052F2956276A0098B208 /* Stats.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE0F052D2956276A0098B208 /* Stats.cpp */; };
 		CE0F0532295640660098B208 /* ABCTools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE0F0530295640660098B208 /* ABCTools.cpp */; };
+		CE0F05352956DF240098B208 /* TradlibCommon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE0F05332956DF240098B208 /* TradlibCommon.cpp */; };
 		CEFD1A772951961A001451DE /* tradlib.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFD1A762951961A001451DE /* tradlib.swift */; };
 		CEFD1A8E295198D4001451DE /* FIRFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFD1A8C295198D4001451DE /* FIRFilter.cpp */; };
 		CEFD1A9A2951994C001451DE /* FastFourierTransform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFD1A982951994C001451DE /* FastFourierTransform.cpp */; };
@@ -81,6 +82,7 @@
 		CE0F052E2956276A0098B208 /* Stats.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stats.hpp; sourceTree = "<group>"; };
 		CE0F0530295640660098B208 /* ABCTools.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ABCTools.cpp; sourceTree = "<group>"; };
 		CE0F0531295640660098B208 /* ABCTools.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ABCTools.hpp; sourceTree = "<group>"; };
+		CE0F05332956DF240098B208 /* TradlibCommon.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TradlibCommon.cpp; sourceTree = "<group>"; };
 		CEFD1A732951961A001451DE /* libtradlib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libtradlib.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEFD1A762951961A001451DE /* tradlib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tradlib.swift; sourceTree = "<group>"; };
 		CEFD1A8B295198D4001451DE /* tradlib-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "tradlib-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -115,7 +117,6 @@
 			children = (
 				CE0F04FC2953F8D10098B208 /* OrnamentationFilter.cpp */,
 				CE0F04FD2953F8D10098B208 /* OrnamentationFilter.hpp */,
-				CE0F0500295433440098B208 /* FileLogger.hpp */,
 				CE0F050929543E470098B208 /* TranscribedNote.cpp */,
 				CE0F050A29543E470098B208 /* TranscribedNote.hpp */,
 				CE0F050C29543E550098B208 /* FuzzyHistogram.cpp */,
@@ -147,6 +148,7 @@
 		CE0F0502295439350098B208 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				CE0F05332956DF240098B208 /* TradlibCommon.cpp */,
 				CEFD1AA8295256D5001451DE /* TradlibCommon.hpp */,
 				CE0F05032954395B0098B208 /* TradlibProperties.cpp */,
 				CE0F05042954395B0098B208 /* TradlibProperties.hpp */,
@@ -156,6 +158,7 @@
 				CE0F052529552C6C0098B208 /* AudioPlayer.hpp */,
 				CE0F052729552C820098B208 /* AudioLoader.cpp */,
 				CE0F052829552C820098B208 /* AudioLoader.hpp */,
+				CE0F0500295433440098B208 /* FileLogger.hpp */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -288,6 +291,7 @@
 				CE0F05112954405D0098B208 /* EnergyCalculator.cpp in Sources */,
 				CE0F05052954395B0098B208 /* TradlibProperties.cpp in Sources */,
 				CEFD1AA62951998B001451DE /* TimeDomainCombFilter.cpp in Sources */,
+				CE0F05352956DF240098B208 /* TradlibCommon.cpp in Sources */,
 				CE0F04FE2953F8D10098B208 /* OrnamentationFilter.cpp in Sources */,
 				CE0F0517295446770098B208 /* ABCTranscriber.cpp in Sources */,
 				CEFD1A9D2951995C001451DE /* FrequencyDomainCombFilter.cpp in Sources */,

@@ -14,16 +14,16 @@ namespace tradlib
     class TranscribedNote
     {
     private:
-        int midiNote;
-        float frequency;
-        float start;
-        float duration;
-        float unmergedDuration;
-        float unmergedStart;
-        float energy;
-        std::string name = "NA";
-        int quaverQ;
-        int multiple;
+        int m_MidiNote;
+        float m_Frequency;
+        float m_Start;
+        float m_Duration;
+        float m_UnmergedDuration;
+        float m_UnmergedStart;
+        float m_Energy;
+        std::string m_Name = "NA";
+        int m_QuaverQ;
+        int m_Multiple;
         
     public:
         TranscribedNote();

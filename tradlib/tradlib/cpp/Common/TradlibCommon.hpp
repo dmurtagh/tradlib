@@ -21,75 +21,44 @@ namespace tradlib
 {
     using SharedFloatVec = shared_ptr<vector<float>>;
 
+    using SharedIntVec = shared_ptr<vector<int>>;
+
+    using SharedTranscribedNotesVec = std::shared_ptr<std::vector<TranscribedNote>>;
+
+    using SharedByteVec = std::shared_ptr<std::vector<byte>>;
+
     /**
         Makes a shared_ptr<vector<float>> with the specified size
      */
-    SharedFloatVec makeSharedFloatVec(size_t size)
-    {
-        SharedFloatVec vector;
-        vector->resize(size);
-        return vector;
-    }
+    SharedFloatVec makeSharedFloatVec(size_t size);
 
     /**
         Makes a shared_ptr<vector<float>> with the specified size and initial value
      */
-    SharedFloatVec makeSharedFloatVec(size_t size, float value)
-    {
-        SharedFloatVec vector;
-        vector->resize(size, value);
-        return vector;
-    }
+    SharedFloatVec makeSharedFloatVec(size_t size, float value);
 
     /**
         Makes a shared float vec from an existing vector<float>
      */
-    SharedFloatVec makeSharedFloatVec(const std::vector<float> & floatVec)
-    {
-        return std::make_shared<std::vector<float>>(floatVec);
-    }
-
-    using SharedIntVec = shared_ptr<vector<int>>;
+    SharedFloatVec makeSharedFloatVec(const std::vector<float> & floatVec);
 
     /**
         Makes a shared_ptr<vector<int>> with the specified size
      */
-    SharedIntVec makeSharedIntVec(size_t size)
-    {
-        SharedIntVec vector;
-        vector->resize(size);
-        return vector;
-    }
+    SharedIntVec makeSharedIntVec(size_t size);
 
     /**
         Makes a shared_ptr<vector<int>> with the specified size and initial value
      */
-    SharedIntVec makeSharedIntVec(size_t size, float value)
-    {
-        SharedIntVec vector;
-        vector->resize(size, value);
-        return vector;
-    }
+    SharedIntVec makeSharedIntVec(size_t size, float value);
 
     /**
         Makes a shared int vec from an existing vector<int>
      */
-    SharedIntVec makeSharedIntVec(const std::vector<int> & intVec)
-    {
-        return std::make_shared<std::vector<int>>(intVec);
-    }
-
-    using SharedTranscribedNotesVec = std::shared_ptr<std::vector<TranscribedNote>>;
+    SharedIntVec makeSharedIntVec(const std::vector<int> & intVec);
 
     /**
         Makes a shared_ptr<vector<TranscribedNote>> with the specified size
      */
-    SharedTranscribedNotesVec makeSharedTranscribedNotesVec(size_t size)
-    {
-        SharedTranscribedNotesVec vector;
-        vector->resize(size);
-        return vector;
-    }
-
-    using SharedByteVec = std::shared_ptr<std::vector<byte>>;
+    SharedTranscribedNotesVec makeSharedTranscribedNotesVec(size_t size);
 }

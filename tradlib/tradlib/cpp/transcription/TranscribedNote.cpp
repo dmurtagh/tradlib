@@ -17,50 +17,50 @@ TranscribedNote::TranscribedNote()
 TranscribedNote::TranscribedNote(float frequency, float start, float duration)
 {
     setFrequency(frequency);
-    this->start = start;
-    this->unmergedStart = start;
-    this->duration = duration;
-    this->unmergedDuration = duration;
+    this->m_Start = start;
+    this->m_UnmergedStart = start;
+    this->m_Duration = duration;
+    this->m_UnmergedDuration = duration;
 }
 
 float TranscribedNote::getFrequency() const
 {
-    return frequency;
+    return m_Frequency;
 }
 
 void TranscribedNote::setFrequency(float frequency)
 {
-    this->frequency = frequency;
+    this->m_Frequency = frequency;
 }
 
 float TranscribedNote::getStart() const
 {
-    return start;
+    return m_Start;
 }
 
 void TranscribedNote::setStart(float start)
 {
-    this->start = start;
+    this->m_Start = start;
 }
 
 float TranscribedNote::getDuration() const
 {
-    return duration;
+    return m_Duration;
 }
 
 void TranscribedNote::setDuration(float duration)
 {
-    this->duration = duration;
+    this->m_Duration = duration;
 }
 
 std::string TranscribedNote::getSpelling() const
 {
-    return name;
+    return m_Name;
 }
 
 void TranscribedNote::setSpelling(std::string name)
 {
-    this->name = name;
+    this->m_Name = name;
 }
 
 std::string TranscribedNote::toString()
@@ -78,60 +78,60 @@ std::string TranscribedNote::toString()
 
 float TranscribedNote::getEnergy() const
 {
-    return energy;
+    return m_Energy;
 }
 
 void TranscribedNote::setEnergy(float energy)
 {
-    this->energy = energy;
+    this->m_Energy = energy;
 }
 
 int TranscribedNote::getQuaverQ() const
 {
-    return quaverQ;
+    return m_QuaverQ;
 }
 
 void TranscribedNote::setQuaverQ(int quaverQ)
 {
-    this->quaverQ = quaverQ;
+    this->m_QuaverQ = quaverQ;
 }
 
 int TranscribedNote::getMultiple() const
 {
-    return multiple;
+    return m_Multiple;
 }
 
 void TranscribedNote::setMultiple(int multiple)
 {
-    this->multiple = multiple;
+    this->m_Multiple = multiple;
 }
 
 float TranscribedNote::getUnmergedDuration() const
 {
-    return unmergedDuration;
+    return m_UnmergedDuration;
 }
 
 void TranscribedNote::setUnmergedDuration(float unmergedDuration)
 {
-    this->unmergedDuration = unmergedDuration;
+    this->m_UnmergedDuration = unmergedDuration;
 }
 
 float TranscribedNote::getUnmergedStart() const
 {
-    return unmergedStart;
+    return m_UnmergedStart;
 }
 
 void TranscribedNote::setUnmergedStart(float unmergedStart)
 {
-    this->unmergedStart = unmergedStart;
+    this->m_UnmergedStart = unmergedStart;
 }
 
 int TranscribedNote::getMidiNote() const
 {
-    return midiNote;
+    return m_MidiNote;
 }
 
 void TranscribedNote::setMidiNote(int midiNote)
 {
-    this->midiNote = midiNote;
+    this->m_MidiNote = midiNote;
 }

@@ -149,7 +149,6 @@ float PitchDetector::cepstrumFrequency(const SharedFloatVec & fftMag, int sample
 //    fftGraph.getDefaultSeries().setScale(false);
 //    fftGraph.getDefaultSeries().setData(cepstrum);
 //    MattGuiNB.instance().addFFTGraph(fftGraph, "CEPSTRUM");
-    int max = maxFrameIndex(cepstrum);
     
     return frequency;
     

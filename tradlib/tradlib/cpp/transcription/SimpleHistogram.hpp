@@ -16,7 +16,7 @@ namespace tradlib
     class SimpleHistogram
     {
     private:
-        SharedFloatVec data;
+        SharedFloatVec m_Data;
         
     public:
         

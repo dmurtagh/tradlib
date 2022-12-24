@@ -14,9 +14,9 @@ namespace tradlib
     class EnergyCalculator
     {
     private:
-        SharedFloatVec signal;
-        int start;
-        int end;
+        SharedFloatVec m_Signal;
+        int m_Start;
+        int m_End;
         
     public:
         EnergyCalculator();

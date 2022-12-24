@@ -5,7 +5,8 @@
 //  Created by damien murtagh on 12/21/22.
 //
 
-#include "TradLibProperties.hpp"
+#include "TradlibProperties.hpp"
+#include "Logger.hpp"
 
 using namespace tradlib;
 

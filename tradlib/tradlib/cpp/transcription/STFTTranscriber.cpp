@@ -43,7 +43,6 @@ void STFTTranscriber::transcribe()
     EnergyCalculator energyCalculator;
     energyCalculator.setSignal(m_Signal);
     
-    float signalEnergy = energyCalculator.calculateAverageEnergy();
     float noteEnergy = 0;
     float frequency = 0, lastFrequency = 0;
     SpectralCentroid spectralCentroid;

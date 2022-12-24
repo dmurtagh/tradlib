@@ -211,7 +211,6 @@ std::string ABCTranscriber::convertToABC()
     string abcString;
     convertToMidi();
     
-    float standardNote = calculateStandardNoteDuration();
     EnergyCalculator energyCalculator;
     energyCalculator.setSignal(m_Transcriber->getSignal());
     setMaxEnergy(energyCalculator.calculateMaxEnergy());
