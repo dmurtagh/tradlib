@@ -23,26 +23,26 @@ using namespace tradlib;
  * Array must contain two or more numbers.
  * @return standard deviation estimate of population
  */
-float StandardDeviationCalculator::sdFast(const std::vector<float> & data)
+float StandardDeviationCalculator::sdFast(const SharedFloatVec & data)
 {
     // sd is sqrt of sum of (values-mean) squared divided by n - 1
     // Calculate the mean
     float mean = 0;
-    const size_t n = data.size();
+    const size_t n = data->size();
     if ( n < 2 )
     {
         return nanf("NAN");
     }
     for ( int i=0; i<n; i++ )
     {
-        mean += data[i];
+        mean += (*data)[i];
     }
     mean /= n;
     // calculate the sum of squares
     float sum = 0;
     for ( int i=0; i<n; i++ )
     {
-        const float v = data[i] - mean;
+        const float v = (*data)[i] - mean;
         sum += v * v;
     }
     // Change to ( n - 1 ) to n if you have complete data instead of a sample.
@@ -63,19 +63,19 @@ float StandardDeviationCalculator::sdFast(const std::vector<float> & data)
  * Array must contain two or more numbers.
  * @return standard deviation estimate of population
  */
-float StandardDeviationCalculator::sdKnuth(const std::vector<float> & data)
+float StandardDeviationCalculator::sdKnuth(const SharedFloatVec & data)
 {
-    const size_t n = data.size();
+    const size_t n = data->size();
     if ( n < 2 )
     {
         return nanf("NAN");
     }
-    float avg = data[0];
+    float avg = (*data)[0];
     float sum = 0;
     for ( int i = 1; i < n; i++ )
     {
-        float newavg = avg + ( data[i] - avg ) / ( i + 1 );
-        sum += ( data[i] - avg ) * ( data [i] -newavg ) ;
+        float newavg = avg + ( (*data)[i] - avg ) / ( i + 1 );
+        sum += ( (*data)[i] - avg ) * ( (*data)[i] -newavg ) ;
         avg = newavg;
     }
     // Change to ( n - 1 ) to n if you have complete data instead of a sample.
@@ -88,7 +88,8 @@ float StandardDeviationCalculator::sdKnuth(const std::vector<float> & data)
  */
 void StandardDeviationCalculator::test()
 {
-    std::vector<float> data = { 10, 100 , 50};
+    SharedFloatVec data = makeSharedFloatVec({10, 100, 50});
+    
     Logger::log("sdFast result = " + std::to_string(sdFast( data )));
     Logger::log("sdKnuth result = " + std::to_string(sdKnuth( data )));
 }

@@ -18,6 +18,7 @@
 #include "EnergyCalculator.hpp"
 #include "PitchDetector.hpp"
 #include "TradlibCommon.hpp"
+#include "Logger.hpp"
 
 namespace tradlib
 {

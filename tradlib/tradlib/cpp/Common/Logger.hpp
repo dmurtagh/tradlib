@@ -15,20 +15,6 @@ namespace tradlib
     {
     public:
         
-        static void log(const std::string & msg)
-        {
-            if (TradlibProperties::getString("mode") == "client")
-            {
-                printf("%s", msg.c_str());
-                
-                // ToDo: Log to the GUI
-                //MattGuiNB.log(msg);
-            }
-            else
-                
-            {
-                printf("%s", msg.c_str());
-            }
-        }
+        static void log(const std::string & msg);
     };
 }

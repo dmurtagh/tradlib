@@ -9,6 +9,7 @@
 
 #include <stdio.h>
 #include <vector>
+#include "TradlibCommon.hpp"
 
 namespace tradlib
 {
@@ -28,7 +29,7 @@ namespace tradlib
          * @return standard deviation estimate of population
          */
     public:
-        static float sdFast (const std::vector<float> & data);
+        static float sdFast (const SharedFloatVec & data);
         
         /**
          * Calculates the sample standard deviation of an array
@@ -44,7 +45,7 @@ namespace tradlib
          * Array must contain two or more numbers.
          * @return standard deviation estimate of population
          */
-        static float sdKnuth (const std::vector<float> & data);
+        static float sdKnuth (const SharedFloatVec & data);
         
         /**
          * Test driver

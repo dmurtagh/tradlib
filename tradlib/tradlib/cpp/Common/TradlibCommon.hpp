@@ -13,6 +13,10 @@
 
 using namespace std;
 
+/**
+ Convenience typedefs (using statements) and functions for working with vectors of ints, floats and other
+ common data types such as TranscribedNote
+ */
 namespace tradlib
 {
     using SharedFloatVec = shared_ptr<vector<float>>;
@@ -37,6 +41,14 @@ namespace tradlib
         return vector;
     }
 
+    /**
+        Makes a shared float vec from an existing vector<float>
+     */
+    SharedFloatVec makeSharedFloatVec(const std::vector<float> & floatVec)
+    {
+        return std::make_shared<std::vector<float>>(floatVec);
+    }
+
     using SharedIntVec = shared_ptr<vector<int>>;
 
     /**
@@ -57,6 +69,14 @@ namespace tradlib
         SharedIntVec vector;
         vector->resize(size, value);
         return vector;
+    }
+
+    /**
+        Makes a shared int vec from an existing vector<int>
+     */
+    SharedIntVec makeSharedIntVec(const std::vector<int> & intVec)
+    {
+        return std::make_shared<std::vector<int>>(intVec);
     }
 
     using SharedTranscribedNotesVec = std::shared_ptr<std::vector<TranscribedNote>>;

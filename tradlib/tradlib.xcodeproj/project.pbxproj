@@ -22,6 +22,8 @@
 		CE0F052629552C6C0098B208 /* AudioPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE0F052429552C6C0098B208 /* AudioPlayer.cpp */; };
 		CE0F052929552C820098B208 /* AudioLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE0F052729552C820098B208 /* AudioLoader.cpp */; };
 		CE0F052C295576450098B208 /* WindowFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE0F052A295576450098B208 /* WindowFunction.cpp */; };
+		CE0F052F2956276A0098B208 /* Stats.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE0F052D2956276A0098B208 /* Stats.cpp */; };
+		CE0F0532295640660098B208 /* ABCTools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE0F0530295640660098B208 /* ABCTools.cpp */; };
 		CEFD1A772951961A001451DE /* tradlib.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFD1A762951961A001451DE /* tradlib.swift */; };
 		CEFD1A8E295198D4001451DE /* FIRFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFD1A8C295198D4001451DE /* FIRFilter.cpp */; };
 		CEFD1A9A2951994C001451DE /* FastFourierTransform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFD1A982951994C001451DE /* FastFourierTransform.cpp */; };
@@ -75,6 +77,10 @@
 		CE0F052829552C820098B208 /* AudioLoader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AudioLoader.hpp; sourceTree = "<group>"; };
 		CE0F052A295576450098B208 /* WindowFunction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = WindowFunction.cpp; sourceTree = "<group>"; };
 		CE0F052B295576450098B208 /* WindowFunction.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = WindowFunction.hpp; sourceTree = "<group>"; };
+		CE0F052D2956276A0098B208 /* Stats.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stats.cpp; sourceTree = "<group>"; };
+		CE0F052E2956276A0098B208 /* Stats.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stats.hpp; sourceTree = "<group>"; };
+		CE0F0530295640660098B208 /* ABCTools.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ABCTools.cpp; sourceTree = "<group>"; };
+		CE0F0531295640660098B208 /* ABCTools.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ABCTools.hpp; sourceTree = "<group>"; };
 		CEFD1A732951961A001451DE /* libtradlib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libtradlib.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEFD1A762951961A001451DE /* tradlib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tradlib.swift; sourceTree = "<group>"; };
 		CEFD1A8B295198D4001451DE /* tradlib-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "tradlib-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -130,6 +136,10 @@
 				CE0F0522295524DA0098B208 /* ODCFTranscriber.hpp */,
 				CE0F052A295576450098B208 /* WindowFunction.cpp */,
 				CE0F052B295576450098B208 /* WindowFunction.hpp */,
+				CE0F052D2956276A0098B208 /* Stats.cpp */,
+				CE0F052E2956276A0098B208 /* Stats.hpp */,
+				CE0F0530295640660098B208 /* ABCTools.cpp */,
+				CE0F0531295640660098B208 /* ABCTools.hpp */,
 			);
 			path = transcription;
 			sourceTree = "<group>";
@@ -285,8 +295,10 @@
 				CE0F052C295576450098B208 /* WindowFunction.cpp in Sources */,
 				CE0F051D2955017C0098B208 /* PitchDetector.cpp in Sources */,
 				CE0F0523295524DA0098B208 /* ODCFTranscriber.cpp in Sources */,
+				CE0F0532295640660098B208 /* ABCTools.cpp in Sources */,
 				CE0F051A2954F4820098B208 /* StandardDeviationCalculator.cpp in Sources */,
 				CEFD1AA02951996C001451DE /* PeakCalculator.cpp in Sources */,
+				CE0F052F2956276A0098B208 /* Stats.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,7 +311,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -359,7 +371,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;

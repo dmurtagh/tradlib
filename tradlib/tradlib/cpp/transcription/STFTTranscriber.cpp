@@ -11,6 +11,14 @@
 #include "TranscribedNote.hpp"
 #include "ABCTranscriber.hpp"
 #include "SpectralCentroid.hpp"
+#include "WindowFunction.hpp"
+#include "EnergyCalculator.hpp"
+#include "Logger.hpp"
+#include "FastFourierTransform.hpp"
+#include "StandardDeviationCalculator.hpp"
+#include "PitchDetector.hpp"
+#include "OrnamentationFilter.hpp"
+#include "ABCTools.hpp"
 
 using namespace tradlib;
     
@@ -24,80 +32,87 @@ void STFTTranscriber::transcribe()
 {
     std::string spellings = "";
     std::string unfilteredSpellings = "";
-    vector<TranscribedNote> notes;
+    SharedTranscribedNotesVec notes;
     ABCTranscriber abcTranscriber(this);
     abcTranscriber.makeScale("Major");
     
-    WindowFunction windowFunction = new WindowFunction();
-    windowFunction.setWindowType(WindowFunction.HANNING);
-    SharedFloatVec window = windowFunction.generate(frameSize);
-    std::string lastSpelling = null;
+    WindowFunction windowFunction;
+    windowFunction.setWindowType(WindowFunction::Type::hanning);
+    SharedFloatVec window = windowFunction.generate(m_FrameSize);
+    std::string lastSpelling;
     EnergyCalculator energyCalculator;
-    energyCalculator.setSignal(signal);
+    energyCalculator.setSignal(m_Signal);
     
     float signalEnergy = energyCalculator.calculateAverageEnergy();
     float noteEnergy = 0;
     float frequency = 0, lastFrequency = 0;
     SpectralCentroid spectralCentroid;
-    spectralCentroid.setSampleRate(sampleRate);
-    spectralCentroid.setFrameSize(frameSize);
-    vector<float> fftFrame(frameSize);
-    vector<float> stdDev(signal.length / hopSize);
+    spectralCentroid.setSampleRate(m_SampleRate);
+    spectralCentroid.setFrameSize(m_FrameSize);
+    SharedFloatVec fftFrame = makeSharedFloatVec(m_FrameSize);
+    SharedFloatVec stdDevs = makeSharedFloatVec(m_Signal->size() / m_HopSize);
     int iStdDev = 0;
-    gui.getProgressBar().setMaximum(signal.length);
-    gui.getProgressBar().setValue(0);
-    for (int i = 0 ; i < (signal.length - frameSize) ; i += hopSize)
+    
+    // ToDo: Need to fix gui
+    //gui.getProgressBar().setMaximum(m_Signal->size());
+    //gui.getProgressBar().setValue(0);
+    
+    for (int i = 0 ; i < (m_Signal->size() - m_FrameSize) ; i += m_HopSize)
     {
-        gui.getProgressBar().setValue(i);
-        String spelling;
+        // ToDo: Fix gui
+        //gui.getProgressBar().setValue(i);
         
-        for (int j = 0 ; j < frameSize ; j ++)
+        std::string spelling;
+        
+        for (int j = 0 ; j < m_FrameSize ; j ++)
         {
-            if ((i + j) > signal.length)
+            if ((i + j) > m_Signal->size())
             {
-                Logger.log("Got here!");
+                Logger::log("Got here!");
             }
-            fftFrame[j] = (signal[i + j] / 0x8000) * (*window)[j];
+            (*fftFrame)[j] = ((*m_Signal)[i + j] / 0x8000) * (*window)[j];
         }
         
-        FastFourierTransform fft = new FastFourierTransform();
+        FastFourierTransform fft;
         
-        float[] fftOut = fft.fftMag(fftFrame, 0, frameSize);
-        sc.setFftMag(fftOut);
+        SharedFloatVec fftOut = fft.fftMag(fftFrame, 0, m_FrameSize);
+        spectralCentroid.setFftMag(fftOut);
         // Logger.log("Centroid: " + i + "\t" + sc.calculate());
-        float stdDev = StandardDeviationCalculator.sdFast(fftOut);
-        stdDevs[iStdDev ++] = stdDev;
-        if (Boolean.parseBoolean("" + MattProperties.getString("drawFFTGraphs")) == true)
+        float stdDev = StandardDeviationCalculator::sdFast(fftOut);
+        (*stdDevs)[iStdDev ++] = stdDev;
+        if (TradlibProperties::getBool("drawFFTGraphs") == true)
         {
-            Graph fftGraph = new Graph();
-            
-            fftGraph.setBounds(0, 0, 1000, 1000);
-            fftGraph.getDefaultSeries().setScale(false);
-            fftGraph.getDefaultSeries().setData(fftOut);
-            MattGuiNB.instance().addFFTGraph(fftGraph, "" + i);
+            // ToDo: Fix graphs
+//            Graph fftGraph = new Graph();
+//
+//            fftGraph.setBounds(0, 0, 1000, 1000);
+//            fftGraph.getDefaultSeries().setScale(false);
+//            fftGraph.getDefaultSeries().setData(fftOut);
+//            MattGuiNB.instance().addFFTGraph(fftGraph, "" + i);
         }
-        ec.setStart(i);
-        ec.setEnd(i + frameSize);
-        noteEnergy = ec.calculateAverageEnergy();
-        PitchDetector pitchDetector = new PitchDetector();
-        float mFrequency = pitchDetector.mikelsFrequency(fftOut, sampleRate, frameSize);
+        energyCalculator.setStart(i);
+        energyCalculator.setEnd(i + m_FrameSize);
+        noteEnergy = energyCalculator.calculateAverageEnergy();
+        PitchDetector pitchDetector;
+        float mFrequency = pitchDetector.mikelsFrequency(fftOut, m_SampleRate, m_FrameSize);
         frequency = mFrequency;
-        spelling = MattABCTools.stripAll(abcTranscriber.spell(frequency));
+        spelling = abcTranscriber.spell(frequency);
+        ABCTools::stripAll(spelling);
         
         unfilteredSpellings += spelling;
-        if (lastSpelling == null)
+        if (lastSpelling.empty())
         {
             lastSpelling = spelling;
             lastFrequency = frequency;
         }
-        else if (  !(spelling.equals(lastSpelling)))
+        else if (spelling != lastSpelling)
         {
-            TranscribedNote note = new TranscribedNote();
+            TranscribedNote note;
             note.setSpelling(lastSpelling);
             note.setEnergy(noteEnergy);
             note.setFrequency(lastFrequency);
-            Logger.log("Found note: " + lastSpelling + ", energy: " + noteEnergy + ", frequency: " + lastFrequency);
-            if (notes.size() == 0)
+            Logger::log("Found note: " + lastSpelling + ", energy: " + std::to_string(noteEnergy) + ", frequency: " + std::to_string(lastFrequency));
+            if (notes->size() == 0)
             {
                 note.setStart(0);
                 note.setUnmergedStart(0);
@@ -106,7 +121,7 @@ void STFTTranscriber::transcribe()
             }
             else
             {
-                TranscribedNote lastNote = notes.get(notes.size() -1);
+                TranscribedNote lastNote = (*notes)[notes->size() -1];
                 float start, duration;
                 start = lastNote.getStart() + lastNote.getDuration();
                 note.setStart(start);
@@ -118,7 +133,7 @@ void STFTTranscriber::transcribe()
             lastSpelling = spelling;
             lastFrequency = frequency;
             noteEnergy = 0;
-            notes.add(note);
+            notes->push_back(note);
         }
     }
     
@@ -131,37 +146,37 @@ void STFTTranscriber::transcribe()
      MattGuiNB.instance().addFFTGraph(stdGraph, "STD DEVS");
      */
     // Add the last note
-    if (lastSpelling != null)
+    if (!lastSpelling.empty())
     {
-        TranscribedNote note = new TranscribedNote();
+        TranscribedNote note;
         note.setSpelling(lastSpelling);
         note.setFrequency(lastFrequency);
         note.setEnergy(noteEnergy);
-        if (notes.size() == 0)
+        if (notes->size() == 0)
         {
             note.setStart(0);
             note.setUnmergedStart(0);
             
-            note.setDuration(sampleToSeconds(signal.length));
-            note.setUnmergedDuration(sampleToSeconds(signal.length));
+            note.setDuration(sampleToSeconds((int)m_Signal->size()));
+            note.setUnmergedDuration(sampleToSeconds((int)m_Signal->size()));
         }
         else
         {
-            TranscribedNote lastNote = notes.get(notes.size() -1);
+            TranscribedNote lastNote = (*notes)[notes->size() -1];
             float start, duration;
             start = lastNote.getStart() + lastNote.getDuration();
             note.setStart(start);
             note.setUnmergedStart(start);
             
-            duration = sampleToSeconds(signal.length) - note.getStart();
+            duration = sampleToSeconds((int)m_Signal->size()) - note.getStart();
             note.setDuration(duration);
             note.setUnmergedDuration(duration);
         }
-        notes.add(note);
+        notes->push_back(note);
     }
     
-    OrnamentationFilter opp = new OrnamentationFilter(notes, sampleRate, signal);
-    transcribedNotes = opp.filter();
+    OrnamentationFilter ornamentationFilter(notes, m_SampleRate, m_Signal);
+    m_TranscribedNotes = ornamentationFilter.filter();
     /*
      transcribedNotes = new TranscribedNote[notes.size()];
      for (int i = 0 ; i < notes.size() ; i ++)
@@ -173,11 +188,12 @@ void STFTTranscriber::transcribe()
     
     abcTranscriber.setTranscribedNotes(m_TranscribedNotes);
     abcTranscriber.printScale();
-    String notesString = null;
-    notesString  = abcTranscriber.convertToABC();
+    std::string notesString = abcTranscriber.convertToABC();
     printNotes();
-    Logger.log(unfilteredSpellings);
-    gui.getProgressBar().setValue(signal.length);
-    gui.getTxtABC().setText(notesString);
-    Logger.log("Done");
+    Logger::log(unfilteredSpellings);
+    
+    // ToDo: Fix Gui
+    //gui.getProgressBar().setValue(signal.length);
+    //gui.getTxtABC().setText(notesString);
+    Logger::log("Done");
 }

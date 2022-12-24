@@ -18,6 +18,6 @@ namespace tradlib
         
         STFTTranscriber();
         
-        void transcribe();
+        virtual void transcribe();
     };
 }
