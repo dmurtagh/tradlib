@@ -32,7 +32,7 @@ namespace tradlib
         
         static constexpr int NOTE_NAMES_LEN = 33;
         const std::string kNoteNames[NOTE_NAMES_LEN] = {"D,", "E,", "F,", "G,", "A,", "B,", "C", "C", "D", "E", "F", "G", "A", "B","c", "c", "d", "e", "f", "g", "a", "b", "c'", "c'", "d'", "e'", "f'", "g'", "a'", "b'", "c''", "c''", "d''"};
-        static float knownFrequencies[NOTE_NAMES_LEN];
+        static float m_KnownFrequencies[NOTE_NAMES_LEN];
         static float m_MidiNotes[87];
         
         static constexpr int MIDI_OFFSET = 21;
