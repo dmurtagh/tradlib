@@ -31,7 +31,7 @@ namespace tradlib
     private:
         int m_NumFilters = 12;
         SharedByteVec m_AudioData;
-        int m_NumSamples;
+        int m_NumSamples = 0;
         
         vector<float> m_OldPowers = vector<float>(m_NumFilters);
         vector<float> m_Powers = vector<float>(m_NumFilters);
@@ -62,7 +62,7 @@ namespace tradlib
         /* Removes a silent period from the start of the recording */
         void removeSilence();
         
-        void transcribe(const std::string & fundamentalNote /*not sure if this is needed*/);
+        void transcribe(const std::string & fundamentalNote = "D");
         
         void printNotes();
         

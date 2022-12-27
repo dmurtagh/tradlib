@@ -16,6 +16,9 @@
 
 using namespace tradlib;
 
+float ABCTranscriber::m_KnownFrequencies[NOTE_NAMES_LEN];
+float ABCTranscriber::m_MidiNotes[87];
+
 ABCTranscriber::ABCTranscriber()
 {
     m_PitchModel = pitch_model::FLUTE;
@@ -33,7 +36,7 @@ std::string ABCTranscriber::spell(float frequency)
     vector<float> distance(NOTE_NAMES_LEN);
     for (int j = 0 ; j < NOTE_NAMES_LEN ; j ++)
     {
-        float difference = frequency - knownFrequencies[j];
+        float difference = frequency - m_KnownFrequencies[j];
         
         distance[j] = difference * difference;
     }
@@ -103,22 +106,22 @@ void ABCTranscriber::makeScale(const std::string & mode) // Todo: Make this an e
     {
         if (m_PitchModel == pitch_model::FLUTE)
         {
-            knownFrequencies[0] = TradlibProperties::getFloat(TradlibProperties::getString("fundamentalNote")) / (float) std::pow(RATIO, 12);
+            m_KnownFrequencies[0] = TradlibProperties::getFloat(TradlibProperties::getString("fundamentalNote")) / (float) std::pow(RATIO, 12);
         }
         else
         {   // Use the whistle pitch model
-            knownFrequencies[0] = TradlibProperties::getFloat(TradlibProperties::getString("fundamentalNote"));
+            m_KnownFrequencies[0] = TradlibProperties::getFloat(TradlibProperties::getString("fundamentalNote"));
         }
         // W - W - H - W - W - W - H
         for (int i = 1 ; i < NOTE_NAMES_LEN ; i ++)
         {
             if (isWholeToneInterval(i, majorKeyIntervals))
             {
-                knownFrequencies[i] = knownFrequencies[i - 1] * RATIO * RATIO;
+                m_KnownFrequencies[i] = m_KnownFrequencies[i - 1] * RATIO * RATIO;
             }
             else
             {
-                knownFrequencies[i] = knownFrequencies[i - 1] * RATIO;
+                m_KnownFrequencies[i] = m_KnownFrequencies[i - 1] * RATIO;
             }
         }
     }
@@ -126,7 +129,7 @@ void ABCTranscriber::makeScale(const std::string & mode) // Todo: Make this an e
     Logger::log("FREQUENCIES:");
     for (int i = 0 ; i < NOTE_NAMES_LEN ; i ++)
     {
-        Logger::log(kNoteNames[i] + "\t" + std::to_string(knownFrequencies[i]));
+        Logger::log(kNoteNames[i] + "\t" + std::to_string(m_KnownFrequencies[i]));
     }
     
 }
@@ -335,7 +338,7 @@ void ABCTranscriber::printScale()
     Logger::log("SCALE:");
     for (int i = 0 ; i < NOTE_NAMES_LEN; i ++)
     {
-        Logger::log(kNoteNames[i] + ": " + std::to_string(knownFrequencies[i]));
+        Logger::log(kNoteNames[i] + ": " + std::to_string(m_KnownFrequencies[i]));
     }
 }
 
