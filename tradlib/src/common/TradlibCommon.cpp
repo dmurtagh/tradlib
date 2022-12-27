@@ -9,47 +9,42 @@
 
 using namespace tradlib;
 
-SharedFloatVec makeSharedFloatVec(size_t size)
+SharedFloatVec tradlib::makeSharedFloatVec(size_t size)
 {
-    SharedFloatVec vector;
-    vector->resize(size);
+    SharedFloatVec vector = makeSharedFloatVec(std::vector<float>(size));
     return vector;
 }
 
-SharedFloatVec makeSharedFloatVec(size_t size, float value)
+SharedFloatVec tradlib::makeSharedFloatVec(size_t size, float value)
 {
-    SharedFloatVec vector;
-    vector->resize(size, value);
+    SharedFloatVec vector = makeSharedFloatVec(std::vector<float>(size,value));
     return vector;
 }
 
-SharedFloatVec makeSharedFloatVec(const std::vector<float> & floatVec)
+SharedFloatVec tradlib::makeSharedFloatVec(const std::vector<float> & floatVec)
 {
     return std::make_shared<std::vector<float>>(floatVec);
 }
 
-SharedIntVec makeSharedIntVec(size_t size)
+SharedIntVec tradlib::makeSharedIntVec(size_t size)
 {
-    SharedIntVec vector;
-    vector->resize(size);
+    SharedIntVec vector = makeSharedIntVec(std::vector<int>(size));
     return vector;
 }
 
-SharedIntVec makeSharedIntVec(size_t size, float value)
+SharedIntVec tradlib::makeSharedIntVec(size_t size, float value)
 {
-    SharedIntVec vector;
-    vector->resize(size, value);
+    SharedIntVec vector = makeSharedIntVec(std::vector<int>(size, value));
     return vector;
 }
 
-SharedIntVec makeSharedIntVec(const std::vector<int> & intVec)
+SharedIntVec tradlib::makeSharedIntVec(const std::vector<int> & intVec)
 {
     return std::make_shared<std::vector<int>>(intVec);
 }
 
-SharedTranscribedNotesVec makeSharedTranscribedNotesVec(size_t size)
+SharedTranscribedNotesVec tradlib::makeSharedTranscribedNotesVec(size_t size)
 {
-    SharedTranscribedNotesVec vector;
-    vector->resize(size);
+    SharedTranscribedNotesVec vector = std::make_shared<std::vector<TranscribedNote>>(size);
     return vector;
 }
