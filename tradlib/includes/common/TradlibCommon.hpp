@@ -30,11 +30,13 @@ namespace tradlib
     /**
         Makes a shared_ptr<vector<float>> with the specified size
      */
+    SharedFloatVec makeSharedFloatVec(int size);
     SharedFloatVec makeSharedFloatVec(size_t size);
 
     /**
         Makes a shared_ptr<vector<float>> with the specified size and initial value
      */
+    SharedFloatVec makeSharedFloatVec(int size, float value);
     SharedFloatVec makeSharedFloatVec(size_t size, float value);
 
     /**
@@ -45,11 +47,13 @@ namespace tradlib
     /**
         Makes a shared_ptr<vector<int>> with the specified size
      */
+    SharedIntVec makeSharedIntVec(int size);
     SharedIntVec makeSharedIntVec(size_t size);
 
     /**
         Makes a shared_ptr<vector<int>> with the specified size and initial value
      */
+    SharedIntVec makeSharedIntVec(int size, float value);
     SharedIntVec makeSharedIntVec(size_t size, float value);
 
     /**

@@ -121,9 +121,14 @@ void ODCFTranscriber::transcribe(const std::string & fundamentalNote /*not sure 
     }
     
     Logger::log("Configuring filters...");
+    
+    assert(m_NumSamples > 0);
+    
     configureFilters();
     int numHops = (m_NumSamples / m_HopSize);
     int odfSize =  numHops - 1;
+    
+    assert(odfSize >= 0);
     
     SharedFloatVec frame = makeSharedFloatVec(m_FrameSize);
     SharedFloatVec odf = makeSharedFloatVec(odfSize);

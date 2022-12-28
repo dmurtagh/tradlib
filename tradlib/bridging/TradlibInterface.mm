@@ -10,6 +10,8 @@
 
 #include "ODCFTranscriber.hpp"
 
+
+
 using namespace tradlib;
 
 @implementation TradlibInterface
@@ -17,6 +19,7 @@ using namespace tradlib;
 {
     ODCFTranscriber odcfTranscriber;
     //odcfTranscriber.setAudioData(<#const SharedByteVec &audioData#>, <#SharedFloatVec &signal#>, <#int sampleRate#>, <#const std::string &fundamentalNote#>)
+    
     odcfTranscriber.transcribe();
 }
 @end

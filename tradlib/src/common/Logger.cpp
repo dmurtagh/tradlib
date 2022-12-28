@@ -13,7 +13,7 @@ void Logger::log(const std::string & msg)
 {
     if (TradlibProperties::getString("mode") == "client")
     {
-        printf("%s", msg.c_str());
+        printf("%s\n", msg.c_str());
         
         // ToDo: Log to the GUI
         //MattGuiNB.log(msg);
@@ -21,6 +21,6 @@ void Logger::log(const std::string & msg)
     else
         
     {
-        printf("%s", msg.c_str());
+        printf("%s\n", msg.c_str());
     }
 }
