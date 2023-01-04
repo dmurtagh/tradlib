@@ -84,12 +84,12 @@ void ABCTranscriber::testScale()
     }
 }
 
-bool ABCTranscriber::isWholeToneInterval(int n, int intervals[])
+bool ABCTranscriber::isWholeToneInterval(int n)
 {
     n = n % 8;
-    for (int i = 0 ; i < NOTE_NAMES_LEN; i ++)
+    for (int majorKeyInterval : kMajorKeyIntervals)
     {
-        if (n == intervals[i])
+        if (n == majorKeyInterval)
         {
             return true;
         }
@@ -101,7 +101,6 @@ void ABCTranscriber::makeScale(const std::string & mode) // Todo: Make this an e
 {
     
     // W - W - H - W - W - H - H - H
-    int majorKeyIntervals[] = {1, 2, 4, 5};
     if (mode == ("Major"))
     {
         if (m_PitchModel == pitch_model::FLUTE)
@@ -115,7 +114,7 @@ void ABCTranscriber::makeScale(const std::string & mode) // Todo: Make this an e
         // W - W - H - W - W - W - H
         for (int i = 1 ; i < NOTE_NAMES_LEN ; i ++)
         {
-            if (isWholeToneInterval(i, majorKeyIntervals))
+            if (isWholeToneInterval(i))
             {
                 m_KnownFrequencies[i] = m_KnownFrequencies[i - 1] * RATIO * RATIO;
             }

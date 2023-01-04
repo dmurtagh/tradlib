@@ -11,8 +11,8 @@ namespace tradlib
     {
     public:
         
-        virtual void deleteLog(const std::string & fileName) = 0;
+        void deleteLog(const std::string & fileName);
         
-        virtual void log(const std::string & fileName, const std::string & txt) = 0;
+        void log(const std::string & fileName, const std::string & txt);
     };
 }

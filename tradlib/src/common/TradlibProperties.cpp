@@ -15,7 +15,7 @@ unordered_map<string,string> TradlibProperties::m_Properties =
     { "dbpassword", "gT*8e&NbQ36ED6" },
     { "indexFile", "index.matt" },
     { "logSearches", "false" },
-    { "silenceThreshold", "500.0f" },
+    { "silenceThreshold", "500.0" },
     { "SearchCorpus", "../../../../corpus/searchCorpus" },
     { "searchMethod", "bryan" },
     { "pitchDetector", "mikel" },
@@ -23,6 +23,7 @@ unordered_map<string,string> TradlibProperties::m_Properties =
     { "mode", "client" },
     { "scaleODFFactor", "4.0f" },
     { "drawFFTGraphs", "false" },
+    { "drawODFGraphs", "false" },
     { "DynamicThresholdTime", "100" },
     { "F", "349.23" },
     { "frameSize", "2048" },
@@ -52,7 +53,9 @@ unordered_map<string,string> TradlibProperties::m_Properties =
     { "drawFrameGraphs", "false" },
     { "tansey", "false" },
     { "pitchPeak", "2" },
-    { "dburl", "jdbc:mysql://localhost/tunometer" }
+    { "dburl", "jdbc:mysql://localhost/tunometer" },
+    { "fileLoggerPath", "/Users/damienmurtagh/filtered.txt" },
+    { "notesLoggerPath", "/Users/damienmurtagh/notes.txt" },
 };
 
 float TradlibProperties::getInt(const std::string & key)

@@ -35,6 +35,9 @@ namespace tradlib
         static float m_KnownFrequencies[NOTE_NAMES_LEN];
         static float m_MidiNotes[87];
         
+        // W - W - H - W - W - H - H - H (d,e,f#,g,a,b,c,c#)
+        static constexpr int kMajorKeyIntervals[] = {1, 2, 4, 5};
+        
         static constexpr int MIDI_OFFSET = 21;
         vector<int> m_QuantizedMidi;
         
@@ -70,7 +73,7 @@ namespace tradlib
         
         void testScale();
         
-        bool isWholeToneInterval(int n, int intervals[]);
+        bool isWholeToneInterval(int n);
         
         void makeScale(const std::string & mode); // Todo: Make this an enum
         
@@ -78,6 +81,8 @@ namespace tradlib
         void makeMidiNotes();
         
     public:
+        
+        // ToDo: Refactor: It's a bit weird that this function has a return value and a side effect. Should be one or the other.
         std::string convertToMidi();
         
         std::string convertToParsons();

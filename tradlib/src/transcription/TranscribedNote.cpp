@@ -70,10 +70,22 @@ std::string TranscribedNote::toString()
     std::to_string(getStart()) + "\t" +
     std::to_string(getDuration()) + "\t" +
     std::to_string(getFrequency()) + "\t" +
-    EnergyCalculator::formatEnergy(getEnergy()) + "\t" +
-    getSpelling() + "\t" +
-    std::to_string(getMultiple()) + "\t" +
+    EnergyCalculator::formatEnergy(getEnergy()) + "\t\t" +
+    getSpelling() + "\t\t\t" +
+    std::to_string(getMultiple()) + "\t\t\t" +
     std::to_string(getQuaverQ());
+}
+
+std::string TranscribedNote::headersString()
+{
+    return
+    std::string("Start\t\t") +
+    "Duration\t" +
+    "Frequency\t" +
+    "Energy\t" +
+    "Spelling\t" +
+    "Multiple\t" +
+    "QuaverQ";
 }
 
 float TranscribedNote::getEnergy() const

@@ -14,16 +14,16 @@ namespace tradlib
     class TranscribedNote
     {
     private:
-        int m_MidiNote;
-        float m_Frequency;
-        float m_Start;
-        float m_Duration;
-        float m_UnmergedDuration;
-        float m_UnmergedStart;
-        float m_Energy;
-        std::string m_Name = "NA";
-        int m_QuaverQ;
-        int m_Multiple;
+        int m_MidiNote              = 0;
+        float m_Frequency           = 0.f;
+        float m_Start               = 0.f;
+        float m_Duration            = 0.f;
+        float m_UnmergedDuration    = 0.f;
+        float m_UnmergedStart       = 0.f;
+        float m_Energy              = 0.f;
+        std::string m_Name          = "NA";
+        int m_QuaverQ               = 0;
+        int m_Multiple              = 0;
         
     public:
         TranscribedNote();
@@ -47,6 +47,8 @@ namespace tradlib
         void setSpelling(std::string name);
         
         std::string toString();
+        
+        static std::string headersString();
         
         float getEnergy() const;
         

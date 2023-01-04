@@ -165,15 +165,7 @@ float PitchDetector::mikelsFrequency(const SharedFloatVec & fftMag, int sampleRa
     std::sort(peaks->begin(), peaks->end(), [&fftMag]
               (const int & lhs, const int & rhs)
     {
-        if ((*fftMag)[lhs] == (*fftMag)[rhs])
-        {
-            return 0;
-        }
-        if ((*fftMag)[lhs] < (*fftMag)[rhs])
-        {
-            return 1;
-        }
-        return -1;
+        return (*fftMag)[lhs] > (*fftMag)[rhs];
     });
        
     const int numCandidates = 5;

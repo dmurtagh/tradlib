@@ -6,8 +6,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <AVFoundation/AVFoundation.h>
 
 @interface TradlibInterface : NSObject
-- (void) transcribeAudio;
+
+- (void) transcribeAudio: (AVAudioPCMBuffer*) pcmBuffer;
+
 @end
 

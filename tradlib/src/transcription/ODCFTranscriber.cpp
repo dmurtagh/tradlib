@@ -28,16 +28,12 @@ ODCFTranscriber::ODCFTranscriber()
     m_SilenceThreshold = TradlibProperties::getFloat("silenceThreshold");
 }
 
-void ODCFTranscriber::setAudioData(const SharedByteVec & audioData, SharedFloatVec & signal, int sampleRate, const std::string & fundamentalNote)
+void ODCFTranscriber::setAudioData(SharedFloatVec & signal, int sampleRate, const std::string & fundamentalNote)
 {
     TradlibProperties::setString("fundamentalNote", fundamentalNote);
     
-    m_AudioData = audioData;
     m_Signal = signal;
     m_SampleRate = sampleRate;
-    
-    FastFourierTransform fft;
-    SharedFloatVec ffts = fft.fftMag(signal, 0, m_FrameSize);
     
     Logger::log("Removing silence at the start...");
     removeSilence();
@@ -93,7 +89,7 @@ void ODCFTranscriber::removeSilence()
     }
 }
 
-void ODCFTranscriber::transcribe(const std::string & fundamentalNote /*not sure if this is needed*/)
+void ODCFTranscriber::transcribe(const std::string & fundamentalNote /*ToDo: Figure this out. not sure if this is needed*/)
 {
 //            File soundFile = new File(inputFile);
 //            Logger.log("Processing: " + soundFile.getName());
@@ -313,6 +309,7 @@ void ODCFTranscriber::transcribe(const std::string & fundamentalNote /*not sure 
 
 void ODCFTranscriber::printNotes()
 {
+    Logger::log(TranscribedNote::headersString());
     for (int i = 0 ; i < m_TranscribedNotes->size() ; i ++)
     {
         Logger::log((*m_TranscribedNotes)[i].toString());
@@ -361,7 +358,6 @@ void ODCFTranscriber::setNumSamples(int numSamples)
 
 void ODCFTranscriber::cleanup()
 {
-    m_AudioData = {};
     m_OldPowers  = {};
     m_Powers  = {};
     m_TranscribedNotes = {};
@@ -459,7 +455,7 @@ void ODCFTranscriber::removeSpuriousOnsets(SharedIntVec & onsetsVector, const Sh
 SharedTranscribedNotesVec ODCFTranscriber::calculateNotesUsingFFT(const SharedFloatVec & odfSignal, const SharedFloatVec & signal, int sampleRate)
 {
     Logger::log("Calculating frequencies of " + std::to_string(odfSignal->size() - 1) + " notes");
-    SharedTranscribedNotesVec notes;
+    SharedTranscribedNotesVec notes = makeSharedTranscribedNotesVec(0);
     
     //m_GUI.clearFFTGraphs();
     

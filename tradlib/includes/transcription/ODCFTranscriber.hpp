@@ -30,7 +30,6 @@ namespace tradlib
         
     private:
         int m_NumFilters = 12;
-        SharedByteVec m_AudioData;
         int m_NumSamples = 0;
         
         vector<float> m_OldPowers = vector<float>(m_NumFilters);
@@ -57,7 +56,7 @@ namespace tradlib
     public:
         ODCFTranscriber();
         
-        void setAudioData(const SharedByteVec & audioData, SharedFloatVec & signal, int sampleRate, const std::string & fundamentalNote);
+        void setAudioData(SharedFloatVec & signal, int sampleRate, const std::string & fundamentalNote);
         
         /* Removes a silent period from the start of the recording */
         void removeSilence();

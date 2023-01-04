@@ -127,6 +127,7 @@ SharedTranscribedNotesVec OrnamentationFilter::filter()
                     {
                         i++;
                         current.setMultiple(multiple);
+                        iter++;
                     }
                 }
                 
@@ -238,13 +239,11 @@ SharedTranscribedNotesVec OrnamentationFilter::filter()
         Logger::log(std::to_string(i) + "\t" + (*m_TranscribedNotes)[i].toString());
     }
     
-    SharedTranscribedNotesVec notes;
-    for (auto & it : *m_TranscribedNotes)
-        notes->push_back(it);
-    
     after = (int)m_TranscribedNotes->size();
-    m_FileLogger->log("filtered.txt", "" + std::to_string(original) + "\t" + std::to_string(filtered) + "\t" + std::to_string(inserted) + "\t" + std::to_string(after));
-    return notes;
+    m_FileLogger.log(TradlibProperties::getString("fileLoggerPath"),
+                     "original notes\tnum filtered\tnum inserted\tsize after\n" +
+                     std::to_string(original) + "\t\t\t\t" + std::to_string(filtered) + "\t\t\t\t" + std::to_string(inserted) + "\t\t\t\t" + std::to_string(after));
+    return m_TranscribedNotes;
 }
 
 int OrnamentationFilter::calculateNearestMultiple(float duration, float standard)

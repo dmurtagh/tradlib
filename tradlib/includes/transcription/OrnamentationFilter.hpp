@@ -23,8 +23,7 @@ namespace tradlib
         int m_SampleRate;
         SharedFloatVec m_Signal;
         
-        // ToDo: Needs to be instantiated
-        FileLogger * m_FileLogger;
+        FileLogger m_FileLogger;
         
     public:
         OrnamentationFilter(const SharedTranscribedNotesVec & transcribedNotes, int sampleRate, const SharedFloatVec & signal);
