@@ -17,6 +17,7 @@
 #include "WindowFunction.hpp"
 #include "OrnamentationFilter.hpp"
 #include "Stats.hpp"
+#include "TestData.hpp"
 
 using namespace tradlib;
 
@@ -184,13 +185,19 @@ void ODCFTranscriber::transcribe(const std::string & fundamentalNote /*ToDo: Fig
 //                    }
     }
     
+    assert(TestData::isEqual("/Users/damienmurtagh/git/matt2/results/odf_filter.txt", odf));
+    
     // Now calculate the proposed onsets
     Logger::log("Calculating onsets...");
     SharedIntVec onsetsVector = PeakCalculator::calculatePeaks(odf, 1, (int)odf->size(), 0);
     
+    assert(TestData::isEqual("/Users/damienmurtagh/git/matt2/results/onsets_vector.txt", onsetsVector));
+    
     // Now calculate the dynamic threshold
     Logger::log("Calculating dynamic threshold...");
     SharedFloatVec odfThreshold = calculateDynamicThreshold(odf);
+    
+    assert(TestData::isEqual("/Users/damienmurtagh/git/matt2/results/odf_threshold.txt", odfThreshold));
     
     if (TradlibProperties::getBool("drawODFGraphs") == true)
     {
@@ -215,6 +222,8 @@ void ODCFTranscriber::transcribe(const std::string & fundamentalNote /*ToDo: Fig
     // Remove any onsets lower than the threshold
     removeSpuriousOnsets(onsetsVector, odfThreshold, odf);
     
+    assert(TestData::isEqual("/Users/damienmurtagh/git/matt2/results/odf_threshold_spurios_onsets_removed.txt", odfThreshold));
+    
     // Convert the onsets to signal points
     SharedFloatVec odfSignal = makeSharedFloatVec(onsetsVector->size() + 2);
     (*odfSignal)[0] = 0;
@@ -233,6 +242,9 @@ void ODCFTranscriber::transcribe(const std::string & fundamentalNote /*ToDo: Fig
         (*odfSignal)[odfSignalIndex ++] = signalIndex;
     }
     (*odfSignal)[odfSignal->size() - 1] = (m_Signal->size() - 1);
+    
+    assert(TestData::isEqual("/Users/damienmurtagh/git/matt2/results/odf_signal.txt", odfSignal));
+
     
     // Plot the onsets
     // ToDo: fix gui
@@ -298,6 +310,8 @@ void ODCFTranscriber::transcribe(const std::string & fundamentalNote /*ToDo: Fig
     
     // ToDo: GUI
     //m_GUI.enableButtons(true);
+    
+    assert(TestData::isEqual("/Users/damienmurtagh/git/matt2/results/abc_transcription.txt", m_AbcTranscription));
     
     TradlibProperties::setString("fundamentalNote", m_DefaultFundamental);
     

@@ -28,10 +28,18 @@ using namespace tradlib;
 {
     ODCFTranscriber odcfTranscriber;
     
-    //SharedFloatVec signal = [self pcmBufferToSharedFloatVec:pcmBuffer];
-    SharedFloatVec signal = TestData::readTestSignal("/Users/damienmurtagh/git/matt2/results/tune_signal_tripping.txt");
+    SharedFloatVec signal = [self pcmBufferToSharedFloatVec:pcmBuffer];
     
-    odcfTranscriber.setAudioData(signal, 44100, "D");
+    odcfTranscriber.setAudioData(signal, pcmBuffer.format.sampleRate, "D");
+    odcfTranscriber.transcribe();
+}
+
+- (void) transcribeTestAudio
+{
+    SharedIntVec metadata = TestData::readIntVec("/Users/damienmurtagh/git/matt2/results/tune_metadata.txt");
+    SharedFloatVec signal = TestData::readFloatVec("/Users/damienmurtagh/git/matt2/results/tune_signal.txt");
+    ODCFTranscriber odcfTranscriber;
+    odcfTranscriber.setAudioData(signal, (*metadata)[0], "D");
     odcfTranscriber.transcribe();
 }
 
@@ -54,11 +62,15 @@ using namespace tradlib;
     }
     
     int channelCount = pcmBuffer.format.channelCount;
-    assert(channelCount == 1);
-    if (channelCount != 1)
+    assert(channelCount >= 1);
+    if (channelCount < 1)
     {
-        Logger::log("channelCount should be 1, but it's " + std::to_string(channelCount));
+        Logger::log("channelCount should be 1 or more, but it's " + std::to_string(channelCount));
         return tradlib::SharedFloatVec();
+    }
+    else if (channelCount > 1)
+    {
+        Logger::log("channelCount is " + std::to_string(channelCount) + ". Transcription will be run on the first channel");
     }
     
     int frameLength = pcmBuffer.frameLength;

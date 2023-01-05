@@ -12,5 +12,7 @@
 
 - (void) transcribeAudio: (AVAudioPCMBuffer*) pcmBuffer;
 
+- (void) transcribeTestAudio;
+
 @end
 

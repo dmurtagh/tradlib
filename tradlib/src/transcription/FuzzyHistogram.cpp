@@ -34,15 +34,16 @@ float FuzzyHistogram::calculatePeek(const SharedFloatVec & data, float fuzz)
         for (int j = 0 ; j < candidateLengths.size(); j ++)
         {
             float upper, lower;
-            Candidate current = (Candidate) candidateLengths[j];
-            upper = current.value * ( 1.0f + fuzz);
-            lower = current.value * ( 1.0f - fuzz);
+            
+            Candidate * current = (Candidate*) (&candidateLengths[j]);
+            upper = current->value * ( 1.0f + fuzz);
+            lower = current->value * ( 1.0f - fuzz);
             if (((*data)[i] >= lower) && ((*data)[i] <= upper))
             {
                 found = true;
                 //current.value = (current.value + data[i]) / 2.0f;
-                current.count ++;
-                current.value = ((current.value * (float) current.count) + (*data)[i]) / (float) ++ current.count  ;
+                current->count ++;
+                current->value = ((current->value * (float) current->count) + (*data)[i]) / (float) ++ current->count  ;
                 break;
             }
         }

@@ -13,6 +13,7 @@
 #include "EnergyCalculator.hpp"
 #include "PitchDetector.hpp"
 #include "Logger.hpp"
+#include "TestData.hpp"
 
 using namespace tradlib;
 
@@ -63,7 +64,7 @@ SharedTranscribedNotesVec OrnamentationFilter::filter()
                     break;
                 }
                 // Do we need to merge the last frame?
-                TranscribedNote lastNote = (*m_TranscribedNotes)[m_TranscribedNotes->size() - 1];
+                TranscribedNote & lastNote = (*m_TranscribedNotes)[m_TranscribedNotes->size() - 1];
                 if (((lastNote.getStart() + lastNote.getDuration()) - (*m_TranscribedNotes)[end].getStart()) <= ocahWindow)
                 {
                     end = (int)m_TranscribedNotes->size();
@@ -76,32 +77,29 @@ SharedTranscribedNotesVec OrnamentationFilter::filter()
             FuzzyHistogram fuzzyHistogram;
             for (int i = start; i < end; i++)
             {
-                TranscribedNote note = (*m_TranscribedNotes)[i];
+                TranscribedNote & note = (*m_TranscribedNotes)[i];
                 (*histData)[i - start] = note.getDuration();
             }
             // The average note duration, probably the length of a quaver
             quaver = fuzzyHistogram.calculatePeek(histData, 0.3f);
             
             Logger::log("Quaver length: " + std::to_string(quaver));
+            Logger::log(TranscribedNote::headersString());
             for (int i = start ; i < end; i ++)
             {
-                TranscribedNote note = (*m_TranscribedNotes)[i];
+                TranscribedNote & note = (*m_TranscribedNotes)[i];
                 note.setMultiple(calculateNearestMultiple(note.getDuration(), quaver));
                 Logger::log(std::to_string(i) + "\t" + (*m_TranscribedNotes)[i].toString());
             }
             
             // If the Note duration is short,
-            // its probaby an ornamentation
+            // its probably an ornamentation
             // ToDo: This section is tricky. Needs a test or somthing
             if (TradlibProperties::getBool("ornamentationCompensation") && m_TranscribedNotes->size() > 1)
             {
-                //for (int i = start + 1 ; i < end ; i ++)
-                auto iter = m_TranscribedNotes->begin();
-                iter++;
-                int i = start + 1;
-                while (iter != m_TranscribedNotes->end())
+                for (int i = start + 1 ; i < end ; i ++)
                 {
-                    TranscribedNote & current = *iter;
+                    TranscribedNote & current = (*m_TranscribedNotes)[i];
 
                     int multiple = calculateNearestMultiple(current.getDuration(), quaver);
                     if (multiple == 0)
@@ -119,15 +117,14 @@ SharedTranscribedNotesVec OrnamentationFilter::filter()
                             
                         }
                         
-                        iter = m_TranscribedNotes->erase(iter);
+                        m_TranscribedNotes->erase(m_TranscribedNotes->begin() + i); // Not super efficient...
                         filtered ++;
+                        i--;
                         end --;
                     }
                     else
                     {
-                        i++;
                         current.setMultiple(multiple);
-                        iter++;
                     }
                 }
                 
@@ -135,7 +132,7 @@ SharedTranscribedNotesVec OrnamentationFilter::filter()
                 if (calculateNearestMultiple((*m_TranscribedNotes)[start].getDuration(), quaver) == 0)
                 {
                     (*m_TranscribedNotes)[start + 1].setDuration((*m_TranscribedNotes)[start + 1].getDuration() + (*m_TranscribedNotes)[start].getDuration());
-                    m_TranscribedNotes->erase(m_TranscribedNotes->begin());
+                    m_TranscribedNotes->erase(m_TranscribedNotes->begin() + start);
                     end --;
                     filtered ++;
                 }
@@ -234,10 +231,14 @@ SharedTranscribedNotesVec OrnamentationFilter::filter()
         Logger::log("Skipping onset post processing");
     }
     
+    tradlib::SharedFloatVec filteredFrequencies = tradlib::makeSharedFloatVec(m_TranscribedNotes->size());
     for (int i = 0 ; i < m_TranscribedNotes->size(); i ++)
     {
         Logger::log(std::to_string(i) + "\t" + (*m_TranscribedNotes)[i].toString());
+        (*filteredFrequencies)[i] = (*m_TranscribedNotes)[i].getFrequency();
     }
+    
+    assert(TestData::isEqual("/Users/damienmurtagh/git/matt2/results/filtered_frequencies.txt", filteredFrequencies));
     
     after = (int)m_TranscribedNotes->size();
     m_FileLogger.log(TradlibProperties::getString("fileLoggerPath"),

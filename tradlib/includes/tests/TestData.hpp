@@ -14,6 +14,12 @@ namespace tradlib
     class TestData
     {
     public:
-        static SharedFloatVec readTestSignal(const std::string & file);
+        static bool isEqual(const std::string & file, const SharedFloatVec & data);
+        static bool isEqual(const std::string & file, const SharedIntVec & data);
+        static bool isEqual(const std::string & file, const std::string & data);
+        
+        static SharedFloatVec readFloatVec(const std::string & file);
+        
+        static SharedIntVec readIntVec(const std::string & file);
     };
 }
