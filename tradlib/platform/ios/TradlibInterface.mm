@@ -24,23 +24,23 @@ using namespace tradlib;
 
 @implementation TradlibInterface
 
-- (void) transcribeAudio: (AVAudioPCMBuffer*) pcmBuffer
+- (NSString*) transcribeAudio: (AVAudioPCMBuffer*) pcmBuffer
 {
     ODCFTranscriber odcfTranscriber;
     
     SharedFloatVec signal = [self pcmBufferToSharedFloatVec:pcmBuffer];
     
     odcfTranscriber.setAudioData(signal, pcmBuffer.format.sampleRate, "D");
-    odcfTranscriber.transcribe();
+    return [NSString stringWithUTF8String:odcfTranscriber.transcribe().c_str()];
 }
 
-- (void) transcribeTestAudio
+- (NSString*) transcribeTestAudio
 {
     SharedIntVec metadata = TestData::readIntVec("/Users/damienmurtagh/git/matt2/results/tune_metadata.txt");
     SharedFloatVec signal = TestData::readFloatVec("/Users/damienmurtagh/git/matt2/results/tune_signal.txt");
     ODCFTranscriber odcfTranscriber;
     odcfTranscriber.setAudioData(signal, (*metadata)[0], "D");
-    odcfTranscriber.transcribe();
+    return [NSString stringWithUTF8String:odcfTranscriber.transcribe().c_str()];
 }
 
 - (tradlib::SharedFloatVec) pcmBufferToSharedFloatVec: (AVAudioPCMBuffer*) pcmBuffer;

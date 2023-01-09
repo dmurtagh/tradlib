@@ -61,7 +61,7 @@ namespace tradlib
         /* Removes a silent period from the start of the recording */
         void removeSilence();
         
-        void transcribe(const std::string & fundamentalNote = "D");
+        std::string transcribe(const std::string & fundamentalNote = "D");
         
         void printNotes();
         

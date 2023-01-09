@@ -90,7 +90,7 @@ void ODCFTranscriber::removeSilence()
     }
 }
 
-void ODCFTranscriber::transcribe(const std::string & fundamentalNote /*ToDo: Figure this out. not sure if this is needed*/)
+std::string ODCFTranscriber::transcribe(const std::string & fundamentalNote /*ToDo: Figure this out. not sure if this is needed*/)
 {
 //            File soundFile = new File(inputFile);
 //            Logger.log("Processing: " + soundFile.getName());
@@ -319,6 +319,8 @@ void ODCFTranscriber::transcribe(const std::string & fundamentalNote /*ToDo: Fig
     // m_GUI.getProgressBar().setValue(0);
     
     Logger::log("Done.");
+    
+    return m_AbcTranscription;
 }
 
 void ODCFTranscriber::printNotes()

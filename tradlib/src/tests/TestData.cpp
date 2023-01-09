@@ -14,7 +14,11 @@ using namespace std;
 using namespace tradlib;
 
 
+#if INCLUDE_TESTS
+const bool kTestsActive = true;
+#else
 const bool kTestsActive = false;
+#endif
 
 const float kEpsilon = 0.000001f;
 
@@ -88,7 +92,6 @@ bool TestData::isEqual(const std::string & file, const std::string & data)
     // Read test data
     string line;
     ifstream myfile (file);
-    int i = 0;
     std::string fileContents = "";
     if (myfile.is_open())
     {
@@ -128,6 +131,8 @@ SharedFloatVec TestData::readFloatVec(const std::string & file)
 
 SharedIntVec TestData::readIntVec(const std::string & file)
 {
+    
+    bool temp = kTestsActive;
     SharedIntVec signal = makeSharedIntVec(0);
     
     // Read test data

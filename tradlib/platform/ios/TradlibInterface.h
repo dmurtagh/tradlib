@@ -10,9 +10,9 @@
 
 @interface TradlibInterface : NSObject
 
-- (void) transcribeAudio: (AVAudioPCMBuffer*) pcmBuffer;
+- (NSString*) transcribeAudio: (AVAudioPCMBuffer*) pcmBuffer;
 
-- (void) transcribeTestAudio;
+- (NSString*) transcribeTestAudio;
 
 @end
 
