@@ -160,11 +160,12 @@ SharedTranscribedNotesVec OrnamentationFilter::filter()
                     {
                         // Split the note
                         float newDuration = current.getDuration() / multiple;
+                        float currentStart = current.getStart();
                         current.setMultiple(1);
                         current.setDuration(newDuration);
                         for (int m = 1 ; m < multiple; m ++)
                         {
-                            TranscribedNote newNote = TranscribedNote(0, current.getStart() + (m * newDuration), newDuration);
+                            TranscribedNote newNote = TranscribedNote(0, currentStart + (m * newDuration), newDuration);
                             newNote.setSpelling("NEW");
                             newNote.setMultiple(1);
                             auto insertionPointIterator = m_TranscribedNotes->begin() + i + m;
