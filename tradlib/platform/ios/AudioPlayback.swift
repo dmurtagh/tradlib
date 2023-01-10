@@ -78,33 +78,21 @@ class AudioPlayback
         let outputFormat = audioEngine.outputNode.outputFormat(forBus: 0)
         print ("Output Format \(outputFormat)")
         
-//        let converter = AVAudioConverter(from: inputFormat, to: outputFormat)!
-        
-//        // Prepare input and output buffer
-//        let maxSamplesPerBuffer: AVAudioFrameCount = 1000000;
-//        let inputBuffer = AVAudioPCMBuffer(pcmFormat: inputFormat, frameCapacity: maxSamplesPerBuffer)!
-//        let outputBuffer = AVAudioPCMBuffer(pcmFormat: outputFormat, frameCapacity: maxSamplesPerBuffer)!
-//        // When you fill your Int16 buffer with data, send it to converter
-//        converter.convert(to: outputBuffer, error: nil) { inNumPackets, outStatus in
-//            outStatus.pointee = .haveData
-//            return inputBuffer
-//        }
-        
         audioEngine.connect(playerNode, to: audioEngine.outputNode, format: pcmBuffer.format)
         playerNode.scheduleBuffer(pcmBuffer, completionHandler: {
             print("Finished Playing")
         })
         
         // Install tap here to draw the signal level and send current postioin of playing
-        audioEngine.outputNode.installTap(onBus: bus, bufferSize: AVAudioFrameCount(AVBufferSize), format: nil) {
-            buffer, time in
-            
-            DispatchQueue.main.async {
-//                self.delegate?.audioSignal(didReceiveBuffer: buffer, timeStamp: time)
-                print("Tap dispatch async at time: \(time)")
-                
-            }
-        }
+//        audioEngine.outputNode.installTap(onBus: bus, bufferSize: AVAudioFrameCount(AVBufferSize), format: nil) {
+//            buffer, time in
+//            
+//            DispatchQueue.main.async {
+////                self.delegate?.audioSignal(didReceiveBuffer: buffer, timeStamp: time)
+//                print("Tap dispatch async at time: \(time)")
+//                
+//            }
+//        }
         
         do {
             try audioEngine.start()

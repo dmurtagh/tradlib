@@ -9,7 +9,7 @@ import Foundation
 
 class HTTPManager
 {
-    let domainUrlString = "http://localhost:8080/"
+    let domainUrlString = "http://192.168.1.12:8080/"
     
     func searchForCorpusEntry(searchTerm: String,
         completionHandler: @escaping ([ABCMatch]?) -> Void)

@@ -8,114 +8,150 @@
 import Foundation
 import AVFoundation
 
-enum AudioCaptureError: Error {
-    case failedToOpenFile(_ filename: String)
-    case failedToReadIntoBuffer(_ filename: String)
-}
-
-func loadWavFile(_ filename: String) throws -> AVAudioPCMBuffer?
+class AudioCapture: NSObject, AVAudioRecorderDelegate
 {
-    try loadFile(filename, withExtension: "wav")
+    private var recordingSession: AVAudioSession!
+    private var audioRecorder: AVAudioRecorder!
+    
+    var audioRecorderCallback: ((_ success: Bool) -> Void)? = nil;
+    
+    // Tells the delegate when recording stops or finishes due to reaching its time limit.
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool)
+    {
+        print("audio Recorder Did Finish Recording with success flag: \(flag)")
+        audioRecorderCallback?(flag)
+    }
+    
+    // Tells the delegate that the audio recorder encountered an encoding error during recording.
+    func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?)
+    {
+        print("audio Recorder Encode Error Did Occur")
+        audioRecorderCallback?(false)
+    }
+    
+    
+    override init()
+    {
+        recordingSession = AVAudioSession.sharedInstance()
+        super.init()
+    }
+    
+    enum AudioCaptureError: Error
+    {
+        case failedToOpenFile(_ filename: String)
+        case failedToReadIntoBuffer(_ filename: String)
+        case recordPermissionsFailed
+        case errorWhileRecording
+    }
+    
+    func loadWavFile(_ filename: String) throws -> AVAudioPCMBuffer?
+    {
+        return try loadFile(filename, withExtension: "wav")
+    }
+    
+    func loadFile(_ filename: String, withExtension fileExtension: String) throws -> AVAudioPCMBuffer?
+    {
+        print ("Loading: \(filename).\(fileExtension)")
+        let fileURLOptional = Bundle.main.url(forResource: filename, withExtension: fileExtension)
+        return try loadFile(fileURLOptional)
+    }
+   
+    func loadFile(_ fileURLOptional: URL?) throws -> AVAudioPCMBuffer?
+    {
+        guard let unwrappedURL = fileURLOptional else
+        {
+            throw AudioCaptureError.failedToOpenFile(fileURLOptional!.description)
+        }
+        
+        guard let audioFile = try? AVAudioFile(forReading: unwrappedURL, commonFormat: AVAudioCommonFormat.pcmFormatFloat32, interleaved: false) else
+        //guard let audioFile = try? AVAudioFile(forReading: unwrappedURL, commonFormat: AVAudioCommonFormat.pcmFormatInt16, interleaved: true) else
+        // Default (format not specified
+        //guard let audioFile = try? AVAudioFile(forReading: unwrappedURL) else
+        {
+            throw AudioCaptureError.failedToOpenFile(fileURLOptional!.description)
+        }
+        
+        print("Loading file of length: \(audioFile.length)")
+        print("Format is \(audioFile.processingFormat.description)")
+        
+        let length = audioFile.length;
+        
+        guard let buffer = AVAudioPCMBuffer(pcmFormat: audioFile.processingFormat, frameCapacity: AVAudioFrameCount(audioFile.length)) else
+        {
+            throw AudioCaptureError.failedToReadIntoBuffer(fileURLOptional!.description)
+        }
+        
+        do
+        {
+            try audioFile.read(into: buffer, frameCount: UInt32(length))
+        }
+        catch
+        {
+            throw AudioCaptureError.failedToReadIntoBuffer(fileURLOptional!.description)
+        }
+        
+        return buffer
+    }
+    
+    func startRecording(completionHandler: @escaping (_ success: Bool) -> Void) -> Void
+    {
+        audioRecorderCallback = completionHandler;
+        do {
+            try recordingSession.setCategory(.record, mode: .default)
+            try recordingSession.setActive(true)
+            recordingSession.requestRecordPermission() { [unowned self] allowed in
+                DispatchQueue.main.async {
+                    if allowed {
+                        print ("Recording is allowed")
+                        
+                        // Start recording
+                        let audioURL = Trad_App.AudioCapture.getRecordingURL()
+                        print(audioURL.absoluteString)
+                        
+                        // Audio Settings
+                        let settings = [
+                            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
+                            AVSampleRateKey: 44100,
+                            AVNumberOfChannelsKey: 1,
+                            AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
+                        ]
+                        
+                        // Perform the recording
+                        do {
+                            // 5
+                            self.audioRecorder = try AVAudioRecorder(url: audioURL, settings: settings)
+                            self.audioRecorder.delegate = self
+                            self.audioRecorder.record()
+                        } catch {
+                            completionHandler(false)
+                        }
+                        
+                    } else {
+                        print ("Recording not allowed")
+                        
+                        completionHandler(false)
+                    }
+                }
+            }
+        } catch {
+            print ("\(error)")
+            completionHandler(false)
+        }
+    }
+    
+    func stopRecording() {
+        audioRecorder.stop()
+        audioRecorder = nil
+    }
+    
+    class func getDocumentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let documentsDirectory = paths[0]
+        return documentsDirectory
+    }
+
+    class func getRecordingURL() -> URL {
+        return getDocumentsDirectory().appendingPathComponent("tune.m4a")
+    }
 }
-
-func loadFile(_ filename: String, withExtension fileExtension: String) throws -> AVAudioPCMBuffer?
-{
-    print ("Loading: \(filename).\(fileExtension)")
-    let fileURLOptional = Bundle.main.url(forResource: filename, withExtension: fileExtension)
-    
-    guard let unwrappedURL = fileURLOptional else
-    {
-        throw AudioCaptureError.failedToOpenFile(filename)
-    }
-    
-    guard let audioFile = try? AVAudioFile(forReading: unwrappedURL, commonFormat: AVAudioCommonFormat.pcmFormatFloat32, interleaved: false) else
-    //guard let audioFile = try? AVAudioFile(forReading: unwrappedURL, commonFormat: AVAudioCommonFormat.pcmFormatInt16, interleaved: true) else
-    // Default (format not specified
-    //guard let audioFile = try? AVAudioFile(forReading: unwrappedURL) else
-    {
-        throw AudioCaptureError.failedToOpenFile(filename)
-    }
-    
-    print("Loading file of length: \(audioFile.length)")
-    print("Format is \(audioFile.processingFormat.description)")
-    
-    let processingFormat = audioFile.processingFormat;
-    let fileFormat = audioFile.fileFormat;
-    let debugDescription = audioFile.debugDescription;
-    let length = audioFile.length;
-    
-    guard let buffer = AVAudioPCMBuffer(pcmFormat: audioFile.processingFormat, frameCapacity: AVAudioFrameCount(audioFile.length)) else
-    {
-        throw AudioCaptureError.failedToReadIntoBuffer(filename)
-    }
-    
-    do
-    {
-        try audioFile.read(into: buffer, frameCount: UInt32(length))
-    }
-    catch
-    {
-        throw AudioCaptureError.failedToReadIntoBuffer(filename)
-    }
-    
-    let floatArray = PCMBufferToFloatArray(buffer);
-    
-    return buffer
-}
-
- func PCMBufferToFloatArray(_ pcmBuffer: AVAudioPCMBuffer) -> [Float]?
- {
-     if let int16ChannelData = pcmBuffer.int16ChannelData
-     {
-         let frameLength = Int(pcmBuffer.frameLength)
-         let stride = pcmBuffer.stride
-         var result: [Float] = Array(repeating: 0, count: frameLength);
-         var temp: [Int16] = Array(repeating: 0, count: frameLength);
-         
-         for sampleIndex in 0..<frameLength
-         {
-             let int16Value = int16ChannelData[0][sampleIndex * stride];
-             temp[sampleIndex] = int16Value;
-             result[sampleIndex] = Float(int16Value);
-         }
-         return result;
-     }
-     
-     if let int32ChannelData = pcmBuffer.int32ChannelData
-     {
-         let frameLength = Int(pcmBuffer.frameLength)
-         let stride = pcmBuffer.stride
-         var result: [Float] = Array(repeating: 0, count: frameLength);
-         var temp: [Int32] = Array(repeating: 0, count: frameLength);
-         
-         for sampleIndex in 0..<frameLength
-         {
-             let intValue = int32ChannelData[0][sampleIndex * stride];
-             temp[sampleIndex] = intValue;
-             result[sampleIndex] = Float(intValue);
-         }
-         return result;
-     }
-     
-     
-     if let floatChannelData = pcmBuffer.floatChannelData
-     {
-         let frameLength = Int(pcmBuffer.frameLength)
-         let stride = pcmBuffer.stride
-         var result: [Float] = Array(repeating: 0.0, count: frameLength);
-
-         for sampleIndex in 0..<frameLength
-         {
-             result[sampleIndex] = floatChannelData[0][sampleIndex * stride]
-         }
-         
-         //print (result)
-         return result
-     }
-     else
-     {
-         print("format not in Float")
-         return nil
-     }
- }
 
