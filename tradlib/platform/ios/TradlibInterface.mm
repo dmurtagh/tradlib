@@ -13,6 +13,7 @@
 #include "ODCFTranscriber.hpp"
 #include "Logger.hpp"
 #include "TestData.hpp"
+#include "TradlibiOSDelegateShim.hpp"
 
 using namespace tradlib;
 
@@ -24,23 +25,53 @@ using namespace tradlib;
 
 @implementation TradlibInterface
 
+std::shared_ptr<TradlibiOSDelegateShim> _TradlibiOSDelegateShim;
+
+-(id)init
+{
+    self = [super init];
+    _TradlibiOSDelegateShim = std::make_shared<TradlibiOSDelegateShim>();
+    
+    _TradlibiOSDelegateShim->SetCurrentActionUpdateDelegateFunction([self](const struct TradlibState state) {
+        [self.delegate onCurrentActionUpdate: state];
+    });
+    _TradlibiOSDelegateShim->SetCurrentActionCompleteDelegateFunction([self](const struct TradlibState state) {
+        [self.delegate onCurrentActionComplete: state];
+    });
+    
+    return self;
+}
+
+-(void)dealloc {
+}
+
 - (NSString*) transcribeAudio: (AVAudioPCMBuffer*) pcmBuffer
 {
-    ODCFTranscriber odcfTranscriber;
-    
+    ODCFTranscriber odcfTranscriber(_TradlibiOSDelegateShim);
     SharedFloatVec signal = [self pcmBufferToSharedFloatVec:pcmBuffer];
-    
     odcfTranscriber.setAudioData(signal, pcmBuffer.format.sampleRate, "D");
-    return [NSString stringWithUTF8String:odcfTranscriber.transcribe().c_str()];
+    
+    auto optionalResult = odcfTranscriber.transcribe();
+    if (optionalResult == std::nullopt) {
+        return nil;
+    }
+        
+    return [NSString stringWithUTF8String:optionalResult->c_str()];
 }
 
 - (NSString*) transcribeTestAudio
 {
     SharedIntVec metadata = TestData::readIntVec("/Users/damienmurtagh/git/matt2/results/tune_metadata.txt");
     SharedFloatVec signal = TestData::readFloatVec("/Users/damienmurtagh/git/matt2/results/tune_signal.txt");
-    ODCFTranscriber odcfTranscriber;
+    ODCFTranscriber odcfTranscriber(_TradlibiOSDelegateShim);
     odcfTranscriber.setAudioData(signal, (*metadata)[0], "D");
-    return [NSString stringWithUTF8String:odcfTranscriber.transcribe().c_str()];
+    
+    auto optionalResult = odcfTranscriber.transcribe();
+    if (optionalResult == std::nullopt) {
+        return nil;
+    }
+        
+    return [NSString stringWithUTF8String:optionalResult->c_str()];
 }
 
 - (tradlib::SharedFloatVec) pcmBufferToSharedFloatVec: (AVAudioPCMBuffer*) pcmBuffer;

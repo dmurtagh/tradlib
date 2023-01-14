@@ -10,6 +10,7 @@
 #include <vector>
 #include <memory>
 #include "TranscribedNote.hpp"
+#include "TradlibDelegate.hpp"
 
 using namespace std;
 
@@ -26,6 +27,8 @@ namespace tradlib
     using SharedTranscribedNotesVec = std::shared_ptr<std::vector<TranscribedNote>>;
 
     using SharedByteVec = std::shared_ptr<std::vector<byte>>;
+
+    using SharedDelegate = std::shared_ptr<TradlibDelegate>;
 
     /**
         Makes a shared_ptr<vector<float>> with the specified size

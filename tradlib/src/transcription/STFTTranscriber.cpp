@@ -22,9 +22,9 @@
 
 using namespace tradlib;
     
-STFTTranscriber::STFTTranscriber()
+STFTTranscriber::STFTTranscriber(SharedDelegate delegate)
 :
-    ODCFTranscriber()
+    ODCFTranscriber(delegate)
 {
 }
 

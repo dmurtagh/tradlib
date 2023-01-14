@@ -18,11 +18,16 @@
 #include "OrnamentationFilter.hpp"
 #include "Stats.hpp"
 #include "TestData.hpp"
+#include "TradlibProperties.hpp"
+#include "TradlibDelegate.hpp"
+#include "TradlibState.h"
 
 using namespace tradlib;
 
-ODCFTranscriber::ODCFTranscriber()
+ODCFTranscriber::ODCFTranscriber(SharedDelegate delegate)
 {
+    m_TradlibDelegate = delegate;
+    
     m_FrameSize = 2048;
     m_HopSize = (int) ((float) m_FrameSize * 0.25f);
     
@@ -90,21 +95,8 @@ void ODCFTranscriber::removeSilence()
     }
 }
 
-std::string ODCFTranscriber::transcribe(const std::string & fundamentalNote /*ToDo: Figure this out. not sure if this is needed*/)
+std::optional<std::string> ODCFTranscriber::transcribe(const std::string & fundamentalNote /*ToDo: Figure this out. not sure if this is needed*/)
 {
-//            File soundFile = new File(inputFile);
-//            Logger.log("Processing: " + soundFile.getName());
-//
-//            int iK = soundFile.getName().indexOf("[");
-//            if (iK > -1)
-//            {
-//                int iKK = soundFile.getName().indexOf("]");
-//
-//                String fundamentalNote = soundFile.getName().substring(iK + 1, iKK);
-//                MattProperties.setString("fundamentalNote", fundamentalNote);
-//
-//            }
-    
     // Disable GUI references
     //m_GUI.setTitle(getInputFile());
     //m_GUI.enableButtons(false);
@@ -119,7 +111,15 @@ std::string ODCFTranscriber::transcribe(const std::string & fundamentalNote /*To
     
     Logger::log("Configuring filters...");
     
-    assert(m_NumSamples > 0);
+    if (m_NumSamples == 0)
+    {
+        TradlibState state;
+        state.action        = tradlibState_CurrentAction_ConfigureFilters;
+        state.actionState   = tradlibState_CurrentActionState_Aborted;
+        state.errorReason   = tradlibState_ErrorReason_NoSamplesLoaded;
+        m_TradlibDelegate->onCurrentActionComplete(state);
+        return std::nullopt;
+    }
     
     configureFilters();
     int numHops = (m_NumSamples / m_HopSize);
@@ -144,7 +144,7 @@ std::string ODCFTranscriber::transcribe(const std::string & fundamentalNote /*To
     for (hopIndex = 0 ; hopIndex < numHops ; hopIndex ++)
     {
         //m_GUI.getProgressBar().setValue(hopIndex);
-        // Logger.log("Calculating harmonicity at sample " + (hopIndex * hopSize));
+        Logger::log("Calculating harmonicity at sample " + std::to_string(hopIndex * m_HopSize));
         
         if (((hopIndex * m_HopSize) + m_FrameSize) > m_NumSamples)
         {

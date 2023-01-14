@@ -11,12 +11,14 @@
 
 namespace tradlib
 {
+    class TradlibDelegate;
+
     class STFTTranscriber : public ODCFTranscriber
     {
         
     public:
         
-        STFTTranscriber();
+        STFTTranscriber(SharedDelegate delegate);
         
         virtual void transcribe();
     };

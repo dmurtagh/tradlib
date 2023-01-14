@@ -9,6 +9,7 @@
 
 #include <stdio.h>
 #include <string>
+#include <optional>
 #include "TimeDomainCombFilter.hpp"
 #include "FrequencyDomainCombFilter.hpp"
 
@@ -16,6 +17,8 @@ using namespace std;
 
 namespace tradlib
 {
+    class TradlibDelegate;
+
     class ODCFTranscriber
     {
     protected:
@@ -29,6 +32,9 @@ namespace tradlib
         //GUI m_GUI;
         
     private:
+        
+        SharedDelegate m_TradlibDelegate = nullptr;
+        
         int m_NumFilters = 12;
         int m_NumSamples = 0;
         
@@ -54,14 +60,14 @@ namespace tradlib
         float m_StaticThreshold = 0;
         
     public:
-        ODCFTranscriber();
+        ODCFTranscriber(SharedDelegate delegate);
         
         void setAudioData(SharedFloatVec & signal, int sampleRate, const std::string & fundamentalNote);
         
         /* Removes a silent period from the start of the recording */
         void removeSilence();
         
-        std::string transcribe(const std::string & fundamentalNote = "D");
+        std::optional<std::string> transcribe(const std::string & fundamentalNote = "D");
         
         void printNotes();
         
