@@ -9,12 +9,12 @@ import Foundation
 
 class HTTPManager
 {
-    let domainUrlString = "http://192.168.1.12:8080/"
+    let domainUrlString = "http://tradappserver-env.eba-8yjpncsr.eu-west-1.elasticbeanstalk.com"
     
     func searchForCorpusEntry(searchTerm: String,
         completionHandler: @escaping ([ABCMatch]?) -> Void)
     {
-        let url = URL(string: domainUrlString + "api/corpus-entry/search/" + searchTerm)!
+        let url = URL(string: domainUrlString + "/api/corpus-entry/search/" + searchTerm)!
         
         let task = URLSession.shared.dataTask(with: url, completionHandler: {
             (data, response, error) in
