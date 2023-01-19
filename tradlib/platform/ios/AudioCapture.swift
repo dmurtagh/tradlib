@@ -64,9 +64,6 @@ class AudioCapture: NSObject, AVAudioRecorderDelegate
         }
         
         guard let audioFile = try? AVAudioFile(forReading: unwrappedURL, commonFormat: AVAudioCommonFormat.pcmFormatFloat32, interleaved: false) else
-        //guard let audioFile = try? AVAudioFile(forReading: unwrappedURL, commonFormat: AVAudioCommonFormat.pcmFormatInt16, interleaved: true) else
-        // Default (format not specified
-        //guard let audioFile = try? AVAudioFile(forReading: unwrappedURL) else
         {
             throw AudioCaptureError.failedToOpenFile(fileURLOptional!.description)
         }
@@ -105,7 +102,7 @@ class AudioCapture: NSObject, AVAudioRecorderDelegate
                         print ("Recording is allowed")
                         
                         // Start recording
-                        let audioURL = Trad_App.AudioCapture.getRecordingURL()
+                        let audioURL = AudioCapture.getRecordingURL()
                         print(audioURL.absoluteString)
                         
                         // Audio Settings
