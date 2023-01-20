@@ -42,7 +42,25 @@ void ODCFTranscriber::setAudioData(SharedFloatVec & signal, int sampleRate, cons
     m_SampleRate = sampleRate;
     
     Logger::log("Removing silence at the start...");
-    removeSilence();
+    
+    float threshold = getSilenceThreshold();
+    int numAttempts = 3;
+    bool success = attemptRemoveSilence(threshold);
+    while (!success && numAttempts-- > 0)
+    {
+        Logger::log("Attempting again with one third the threshold");
+        // Attempt again with half the threshold
+        threshold /= 3;
+        success = attemptRemoveSilence(threshold);
+    }
+    
+    if (!success)
+    {
+        Logger::log("No audio found! with threshold: " + to_string(threshold) + ", after " + to_string(numAttempts) + " attempts.");
+        m_Signal = makeSharedFloatVec(0);
+        m_NumSamples = 0;
+    }
+    
     Logger::log("Graphing...");
     if (TradlibProperties::getBool("drawSignalGraphs"))
     {
@@ -55,8 +73,12 @@ void ODCFTranscriber::setAudioData(SharedFloatVec & signal, int sampleRate, cons
     Logger::log("Done.");
 }
 
-/* Removes a silent period from the start of the recording */
-void ODCFTranscriber::removeSilence()
+/**
+ Removes a silent period from the start of the recording
+ Returns true if audio was found and a silent section was removed.
+ Returns false if no audio was found (perhaps the threshold is too high)
+ */
+bool ODCFTranscriber::attemptRemoveSilence(float threshold)
 {
     int frame = 512;
     
@@ -70,7 +92,7 @@ void ODCFTranscriber::removeSilence()
             frameAverage += abs((*m_Signal)[i + j]);
         }
         frameAverage /= (float) j;
-        if (frameAverage > getSilenceThreshold())
+        if (frameAverage > threshold)
         {
             break;
         }
@@ -86,13 +108,11 @@ void ODCFTranscriber::removeSilence()
         Logger::log(std::to_string((float) i / m_SampleRate) + " seconds of silence removed from the start");
         m_Signal = newSignal;
         m_NumSamples = (int)m_Signal->size();
+        return true;
     }
-    else
-    {
-        Logger::log("No audio found!");
-        m_Signal = makeSharedFloatVec(0);
-        m_NumSamples = 0;
-    }
+    Logger::log("No audio found! with threshold: " + to_string(threshold));
+    
+    return false;
 }
 
 std::optional<std::string> ODCFTranscriber::transcribe(const std::string & fundamentalNote /*ToDo: Figure this out. not sure if this is needed*/)

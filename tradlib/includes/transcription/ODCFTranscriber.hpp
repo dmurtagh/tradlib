@@ -64,8 +64,12 @@ namespace tradlib
         
         void setAudioData(SharedFloatVec & signal, int sampleRate, const std::string & fundamentalNote);
         
-        /* Removes a silent period from the start of the recording */
-        void removeSilence();
+        /**
+         Removes a silent period from the start of the recording
+         Returns true if audio was found and a silent section was removed.
+         Returns false if no audio was found (perhaps the threshold is too high)
+         */
+        bool attemptRemoveSilence(float threshold);
         
         std::optional<std::string> transcribe(const std::string & fundamentalNote = "D");
         
