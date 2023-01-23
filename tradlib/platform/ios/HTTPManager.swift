@@ -38,11 +38,17 @@ class HTTPManager
             if let data = data{
                 do {
                     let abcMatches = try JSONDecoder().decode([ABCMatch].self, from: data)
-                    completionHandler(abcMatches)
+                    // Make sure to respond on the main thread
+                    DispatchQueue.main.async {
+                        completionHandler(abcMatches)
+                    }
                 }
                 catch {
                     print(error)
-                    completionHandler(nil)
+                    // Make sure to respond on the main thread
+                    DispatchQueue.main.async {
+                        completionHandler(nil)
+                    }
                 }
             }
         })
