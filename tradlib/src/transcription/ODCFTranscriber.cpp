@@ -460,6 +460,11 @@ int ODCFTranscriber::odfIndexToSignal(int odfIndex)
 
 void ODCFTranscriber::removeSpuriousOnsets(SharedIntVec & onsetsVector, const SharedFloatVec & odfThreshold, const SharedFloatVec & odf) const
 {
+    if (odfThreshold->size() == 0)
+    {
+        return;
+    }
+    
     int dynamicThresholdSamples = (int) ((float) m_SampleRate * ((float) m_DynamicThresholdTime / 1000.0f));
     int dynamicThresholdWidth = dynamicThresholdSamples / m_HopSize;
     
@@ -611,7 +616,8 @@ SharedFloatVec ODCFTranscriber::calculateDynamicThreshold(const SharedFloatVec &
     Stats odfStats(odf);
     m_StaticThreshold = odfStats.average();
     int odfThresholdIndex = 0;
-    for (int i = 0 ; i < (odf->size() - dynamicThresholdWidth); i += dynamicThresholdWidth)
+    
+    for (int i = 0 ; i < ((int)odf->size() - dynamicThresholdWidth); i += dynamicThresholdWidth)
     {
         odfStats.setStart(i);
         odfStats.setEnd(i + dynamicThresholdWidth);

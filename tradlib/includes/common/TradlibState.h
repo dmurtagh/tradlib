@@ -9,7 +9,7 @@
 
 // Using c style enum and struct to maintain compatibility with all of the codebase (c++, objective-c and swift)
 
-enum CurrentAction
+enum TradlibCurrentAction
 {
     tradlibState_CurrentAction_RemoveSilence,
     tradlibState_CurrentAction_ConfigureFilters,
@@ -19,7 +19,7 @@ enum CurrentAction
     
 };
 
-enum CurrentActionState
+enum TradlibCurrentActionState
 {
     tradlibState_CurrentActionState_Starting,
     tradlibState_CurrentActionState_Running,
@@ -28,7 +28,7 @@ enum CurrentActionState
     tradlibState_CurrentActionState_Aborted
 };
 
-enum ErrorReason
+enum TradlibErrorReason
 {
     tradlibState_ErrorReason_NoAudioFound,
     tradlibState_ErrorReason_NoSamplesLoaded,
@@ -37,9 +37,9 @@ enum ErrorReason
 
 struct TradlibState
 {
-    enum CurrentAction       action;
-    enum CurrentActionState  actionState;
-    enum ErrorReason         errorReason;
+    enum TradlibCurrentAction       action;
+    enum TradlibCurrentActionState  actionState;
+    enum TradlibErrorReason         errorReason;
     
     
     // Method
