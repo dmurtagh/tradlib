@@ -9,12 +9,44 @@ import Foundation
 
 class HTTPManager
 {
-    let domainUrlString = "http://tradappserver-env.eba-8yjpncsr.eu-west-1.elasticbeanstalk.com"
+    private var hostname = "http://tradappserver-env.eba-8yjpncsr.eu-west-1.elasticbeanstalk.com"
+    private let awsHostname = "http://tradappserver-env.eba-8yjpncsr.eu-west-1.elasticbeanstalk.com"
+    private let localHostname = "http://localhost:8080"
+    
+    private let serverEnvironmentKey = "serverEnvironment"
+    
+    init() {
+        let env = UserDefaults.standard.string(forKey: "serverEnvironment") ?? "AWS"
+        if env == "AWS" {
+            hostname = awsHostname
+        }
+        else if env == "localhost" {
+            hostname = localHostname
+        }
+        else {
+            assert(false)
+            print("invalid server environemnt")
+        }
+    }
+    
+    func getHostname() -> String {
+        return hostname
+    }
+    
+    func setAWSServer() {
+        hostname = awsHostname
+        UserDefaults.standard.set("AWS", forKey: serverEnvironmentKey)
+    }
+    
+    func setLocalServer() {
+        hostname = localHostname
+        UserDefaults.standard.set("localhost", forKey: serverEnvironmentKey)
+    }
     
     func searchForCorpusEntry(searchTerm: String,
         completionHandler: @escaping ([ABCMatch]?) -> Void)
     {
-        let url = URL(string: domainUrlString + "/api/corpus-entry/search/" + searchTerm)!
+        let url = URL(string: hostname + "/api/corpus-entry/search/" + searchTerm)!
         
         let task = URLSession.shared.dataTask(with: url, completionHandler: {
             (data, response, error) in

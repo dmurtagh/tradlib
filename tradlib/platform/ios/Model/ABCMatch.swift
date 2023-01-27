@@ -7,8 +7,9 @@
 
 import Foundation
 
-struct ABCMatch: Codable, CustomStringConvertible
+struct ABCMatch: Codable, CustomStringConvertible, Identifiable
 {
+    var id: Int
     var ed: Float // Edit Distance
     var line: String
     var corpusEntry: CorpusEntry
@@ -16,7 +17,7 @@ struct ABCMatch: Codable, CustomStringConvertible
     var tags: [String]?
     
     var description: String {
-        var tags = self.tags != nil ? self.tags! : []
+        let tags = self.tags != nil ? self.tags! : []
         return "\(corpusEntry)" +
         "Edit Distance: \(ed)\n" +
         "Line: \(line)\n" +
