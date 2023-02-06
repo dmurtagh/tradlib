@@ -33,7 +33,7 @@ bool ABCTools::stripAll(std::string & notes)
     return true;
 }
 
-void ABCTools::main()
+void ABCTools::test()
 {
     std::string test = "";
     

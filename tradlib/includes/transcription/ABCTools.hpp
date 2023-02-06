@@ -24,7 +24,7 @@ namespace tradlib
          */
         static bool stripAll(std::string & notes);
         
-        static void main();
+        static void test();
         
     private:
         
