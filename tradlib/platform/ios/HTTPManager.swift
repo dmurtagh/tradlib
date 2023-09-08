@@ -44,15 +44,24 @@ class HTTPManager
     }
     
     func searchForCorpusEntry(searchTerm: String,
-        completionHandler: @escaping ([ABCMatch]?) -> Void)
+        completionHandler: @escaping (Result<[ABCMatch]?, SearchError>) -> Void)
     {
         let url = URL(string: hostname + "/api/corpus-entry/search/" + searchTerm)!
         
-        let task = URLSession.shared.dataTask(with: url, completionHandler: {
+        // Create a URLSessionConfiguration object with a custom timeout
+        let configuration = URLSessionConfiguration.default
+        configuration.timeoutIntervalForRequest = 2.0  // Here, 2 seconds is the timeout
+        
+        let shortTimeoutSession = URLSession(configuration: configuration)
+        
+        let task = shortTimeoutSession.dataTask(with: url, completionHandler: {
             (data, response, error) in
             if let error = error
             {
                 print("Error calling api/corpus-entry/search/\(searchTerm): \(error)")
+                DispatchQueue.main.async {
+                    completionHandler(.failure(.connectionTimeout))
+                }
                 return
             }
             
@@ -72,14 +81,14 @@ class HTTPManager
                     let abcMatches = try JSONDecoder().decode([ABCMatch].self, from: data)
                     // Make sure to respond on the main thread
                     DispatchQueue.main.async {
-                        completionHandler(abcMatches)
+                        completionHandler(.success(abcMatches))
                     }
                 }
                 catch {
                     print(error)
                     // Make sure to respond on the main thread
                     DispatchQueue.main.async {
-                        completionHandler(nil)
+                        completionHandler(.failure(.dataParsingError))
                     }
                 }
             }

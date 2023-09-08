@@ -131,8 +131,6 @@ SharedFloatVec TestData::readFloatVec(const std::string & file)
 
 SharedIntVec TestData::readIntVec(const std::string & file)
 {
-    
-    bool temp = kTestsActive;
     SharedIntVec signal = makeSharedIntVec(0);
     
     // Read test data
