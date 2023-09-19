@@ -59,10 +59,11 @@ std::shared_ptr<TradlibiOSDelegateShim> _TradlibiOSDelegateShim;
     return [NSString stringWithUTF8String:optionalResult->c_str()];
 }
 
-- (NSString*) transcribeTestAudio
+- (NSString*) transcribeTestAudioWithMetadataPath: (NSString*) metadataPath
+                                       signalPath: (NSString*) signalPath
 {
-    SharedIntVec metadata = TestData::readIntVec("/Users/damienmurtagh/git/matt2/results/tune_metadata.txt");
-    SharedFloatVec signal = TestData::readFloatVec("/Users/damienmurtagh/git/matt2/results/tune_signal.txt");
+    SharedIntVec metadata = TestData::readIntVec(metadataPath.UTF8String);
+    SharedFloatVec signal = TestData::readFloatVec(signalPath.UTF8String);
     ODCFTranscriber odcfTranscriber(_TradlibiOSDelegateShim);
     odcfTranscriber.setAudioData(signal, (*metadata)[0], "D");
     

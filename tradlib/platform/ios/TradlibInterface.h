@@ -15,7 +15,8 @@
 
 - (NSString*) transcribeAudio: (AVAudioPCMBuffer*) pcmBuffer;
 
-- (NSString*) transcribeTestAudio;
+- (NSString*) transcribeTestAudioWithMetadataPath: (NSString*) metadataPath
+                                       signalPath: (NSString*) signalPath;
 
 @end
 
