@@ -50,7 +50,7 @@ class HTTPManager
         
         // Create a URLSessionConfiguration object with a custom timeout
         let configuration = URLSessionConfiguration.default
-        configuration.timeoutIntervalForRequest = 2.0  // Here, 2 seconds is the timeout
+        configuration.timeoutIntervalForRequest = 10.0 
         
         let shortTimeoutSession = URLSession(configuration: configuration)
         
