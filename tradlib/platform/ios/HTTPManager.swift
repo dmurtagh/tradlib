@@ -12,16 +12,21 @@ class HTTPManager
     private var hostname = "http://tradappserver-env.eba-8yjpncsr.eu-west-1.elasticbeanstalk.com"
     private let awsHostname = "http://tradappserver-env.eba-8yjpncsr.eu-west-1.elasticbeanstalk.com"
     private let localHostname = "http://localhost:8080"
+    private let localIP = "http://172.20.10.5:8080"
     
     private let serverEnvironmentKey = "serverEnvironment"
     
     init() {
-        let env = UserDefaults.standard.string(forKey: "serverEnvironment") ?? "AWS"
+        let env = UserDefaults.standard.string(forKey: serverEnvironmentKey) ?? "AWS"
         if env == "AWS" {
             hostname = awsHostname
         }
         else if env == "localhost" {
             hostname = localHostname
+        }
+        else if (env == "localIP")
+        {
+            hostname = localIP;
         }
         else {
             assert(false)
@@ -41,6 +46,11 @@ class HTTPManager
     func setLocalServer() {
         hostname = localHostname
         UserDefaults.standard.set("localhost", forKey: serverEnvironmentKey)
+    }
+    
+    func setLocalIPServer() {
+        hostname = localIP
+        UserDefaults.standard.set("localIP", forKey: serverEnvironmentKey)
     }
     
     func searchForCorpusEntry(searchTerm: String,
