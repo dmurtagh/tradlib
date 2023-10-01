@@ -9,8 +9,8 @@ import Foundation
 
 class HTTPManager
 {
-    private var hostname = "http://tradappserver-env.eba-8yjpncsr.eu-west-1.elasticbeanstalk.com"
-    private let awsHostname = "http://tradappserver-env.eba-8yjpncsr.eu-west-1.elasticbeanstalk.com"
+    private var hostname = "http://tradapp-development-env.eba-gxfsrk6z.eu-west-1.elasticbeanstalk.com"
+    private let awsHostname = "http://tradapp-development-env.eba-gxfsrk6z.eu-west-1.elasticbeanstalk.com"
     private let localHostname = "http://localhost:8080"
     private let localIP = "http://172.20.10.5:8080"
     
